@@ -1,0 +1,3 @@
+[submodule "merchant-php-class"]
+	path = merchant-php-class
+	url = https://github.com/coingate/merchant-php-class
