@@ -8,8 +8,8 @@
   Author: CoinGate
   Author URI: https://coingate.com
   License: MIT License
-  License URI: https://github.com/coingate/woocommerce-coingate/blob/master/LICENSE.md
-  Github Plugin URI: https://github.com/coingate/woocommerce-coingate
+  License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE.md
+  Github Plugin URI: https://github.com/coingate/woocommerce-plugin
  */
 
 add_action('plugins_loaded', 'coingate_init');
