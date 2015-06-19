@@ -22,7 +22,7 @@ function coingate_init() {
 
     define('PLUGIN_DIR', plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__)) . '/');
 
-    require_once(dirname(__FILE__) . '/merchant-php-class/coingate_merchant.class.php');
+    require_once(dirname(__FILE__) . '/lib/coingate_merchant.class.php');
 
     class WC_Gateway_Coingate extends WC_Payment_Gateway {
         public function __construct() {
