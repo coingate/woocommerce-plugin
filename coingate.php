@@ -97,7 +97,7 @@ function coingate_init() {
                     'title'       => __('API Secret', 'woocommerce'),
                     'type'        => 'text',
                     'default'     => '',
-                    'description' => __('Enable this to accept test payments', 'woocommerce'),
+                    'description' => __('CoinGate API Secret', 'woocommerce'),
                 ),
                 'receive_currency' => array(
                     'title'       => __('Receive Currency', 'woocommerce'),
