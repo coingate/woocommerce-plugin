@@ -31,7 +31,7 @@ function coingate_init() {
             $this->id           = 'coingate';
             $this->has_fields   = false;
             $this->method_title = __('CoinGate', 'woocommerce');
-            $this->icon = apply_filters('woocommerce_paypal_icon', PLUGIN_DIR . 'bitcoin.png');
+            $this->icon = apply_filters('woocommerce_paypal_icon', PLUGIN_DIR . 'assets/bitcoin.png');
 
             $this->init_form_fields();
             $this->init_settings();
