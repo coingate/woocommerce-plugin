@@ -8,7 +8,7 @@ Stable tag: trunk
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE.md
 
-Accept payments through the Bitcoin payment network in euros and US dollars in your WooCommerce store with CoinGate.com
+Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars
 
 == Description ==
 
@@ -18,10 +18,12 @@ CoinGate is a bitcoin payment processor, which allows businesses to receive paym
 
 == Installation ==
 
-1. Download plugin and extract ZIP archive
-2. Upload `woocommerce-coingate/` to the `/wp-content/plugins/` directory
+1. Install plugin. It can do it in three ways:
+  * Install through [Wordpress Plugin Manager](https://codex.wordpress.org/Plugins_Add_New_Screen): Admin » Plugins » Add New » Enter "coingate woocommerce" in search » Click "Install Now"
+  * [Upload ZIP](https://codex.wordpress.org/Plugins_Add_New_Screen#Upload_Tab): Admin » Plugins » Add New » Upload Plugin
+  * Extract ZIP and upload extracted directory to the `/wp-content/plugins/` through FTP
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Create API Credentials in [coingate.com https://coingate.com/] (or [sandbox.coignate.com https://sandbox.coignate.com/] for testing)
+4. Create API Credentials in [coingate.com](https://coingate.com/) (or [sandbox.coignate.com](https://sandbox.coignate.com/) for testing)
 5. Enter API Credentials (App ID, Api Key, Api Secret) data to WooCommerce-Coingate Plugin Settings: Admin » WooCommerce » Click on Checkout tab » Find "Bitcoin" in Payment Gateways table » Click "Settings"
 6. Don't forget check "Enable Bitcoin payment via CoinGate" checkbox in WooCommerce-Coingate Plugin settings
 
