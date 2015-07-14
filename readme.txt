@@ -19,6 +19,7 @@ CoinGate is a bitcoin payment processor, which allows businesses to receive paym
 == Installation ==
 
 Requirements:
+
 * PHP 5.4 or greater
 * curl 7.37.1 or greater
 
@@ -31,7 +32,7 @@ Requirements:
 5. Enter API Credentials (App ID, Api Key, Api Secret) data to WooCommerce-Coingate Plugin Settings: Admin » WooCommerce » Click on Checkout tab » Find "Bitcoin" in Payment Gateways table » Click "Settings"
 6. Don't forget check "Enable Bitcoin payment via CoinGate" checkbox in WooCommerce-Coingate Plugin settings
 
-[Most common issues](http://support.coingate.com/knowledge_base/topics/plugin-slash-extension-slash-module-not-working-common-issues)
+[Most common plugin issues](http://support.coingate.com/knowledge_base/topics/plugin-slash-extension-slash-module-not-working-common-issues)
 
 == Screenshots ==
 
