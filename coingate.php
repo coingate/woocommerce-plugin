@@ -114,8 +114,8 @@ function coingate_init() {
                     'title'       => __('Test', 'woocommerce'),
                     'type'        => 'checkbox',
                     'label'       => __('Enable test mode', 'woocommerce'),
-                    'default'     => 'yes',
-                    'description' => __('Enable this to accept test payments', 'woocommerce'),
+                    'default'     => 'no',
+                    'description' => __('Enable this to accept test payments (sandbox.coingate.com). <a href="http://support.coingate.com/knowledge_base/topics/how-can-i-test-your-service-without-signing-up" target="_blank">Read more about testing</a>', 'woocommerce'),
                 ),
             );
         }
