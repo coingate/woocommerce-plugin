@@ -60,6 +60,7 @@ class CoingateMerchant {
 
 		curl_setopt_array($curl, $curl_options);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
 		$response       = curl_exec($curl);
 		$http_status    = curl_getinfo($curl, CURLINFO_HTTP_CODE);
