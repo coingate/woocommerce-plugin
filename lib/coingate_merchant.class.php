@@ -73,7 +73,7 @@ class CoingateMerchant {
 
 	private function nonce()
 	{
-		return microtime(true) * 10000;
+		return phpversion() >= 5 ? str_replace('.', '', ((string) microtime(true))) : time();
 	}
 
 	private function set_api_url()
