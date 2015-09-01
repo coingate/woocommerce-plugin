@@ -4,12 +4,12 @@
  * PHP CoinGate Merchant Class
  *
  * @author    CoinGate <info@coingate.com>
- * @version   1.0.2
- * @link      http://developer.coingate.com  
+ * @version   1.0.4
+ * @link      http://developer.coingate.com
  * @license   MIT
  */
 
-define('CLASS_VERSION', '1.0.2');
+define('CLASS_VERSION', '1.0.3');
 
 class CoingateMerchant {
     private $app_id             = '';
@@ -48,6 +48,12 @@ class CoingateMerchant {
         $this->request('/orders/' . $order_id);
     }
 
+    public function test_connection() {
+        $this->request('/auth/test');
+
+        return $this->success && $this->response == 'OK';
+    }
+
     public function request($url, $method = 'GET', $params = array())
     {
         $url        = $this->api_url . $url;
@@ -61,7 +67,7 @@ class CoingateMerchant {
         $headers[]  = 'Access-Signature: ' . $signature;
 
         $curl = curl_init();
-        
+
         $curl_options = array(
             CURLOPT_RETURNTRANSFER  => 1,
             CURLOPT_URL             => $url
@@ -78,9 +84,13 @@ class CoingateMerchant {
         curl_setopt_array($curl, $curl_options);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_USERAGENT, $this->user_agent);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
         $response       = curl_exec($curl);
         $http_status    = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        $this->curl_error['message']    = curl_error($curl);
+        $this->curl_error['number']     = curl_errno($curl);
 
         curl_close($curl);
 
@@ -100,5 +110,3 @@ class CoingateMerchant {
         $this->api_url .= $this->version;
     }
 }
-
-?>
