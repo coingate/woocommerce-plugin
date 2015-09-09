@@ -4,7 +4,7 @@
  * PHP CoinGate Merchant Class
  *
  * @author    CoinGate <info@coingate.com>
- * @version   1.0.4
+ * @version   1.0.3
  * @link      http://developer.coingate.com
  * @license   MIT
  */
