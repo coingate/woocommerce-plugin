@@ -56,6 +56,7 @@ function coingate_init() {
             ?>
                 <h3><?php _e('CoinGate', 'woothemes'); ?></h3>
                 <p><?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.', 'woothemes'); ?></p>
+                <p style="display: block; background: #d9edf7; border: 1px solid #bce8f1; color: #31708f; padding: 12px;"><strong>Having trouble?</strong> We can help you! Download the log file from <code><?php echo wc_get_log_file_path( 'coingate' ); ?></code> and send it to <a href="mailto:support@coingate.com">support@coingate.com</a></p>
                 <table class="form-table">
                     <?php $this->generate_settings_html(); ?>
                 </table>
@@ -109,7 +110,7 @@ function coingate_init() {
                         'USD'     => __('US Dollars ($)', 'woocommerce'),
                         'BTC'     => __('Bitcoin (฿)', 'woocommerce')
                     ),
-                    'description' => __('Currency in which you wish to receive your payments. Currency conversions are done at CoinGate.', 'woocomerce'),
+                    'description' => __('The currency in which you wish to receive your payments.', 'woocomerce'),
                     'default'     => 'EUR'
                 ),
                 'test'        => array(
@@ -167,6 +168,7 @@ function coingate_init() {
                     'redirect' => $coingate_response['payment_url']
                 );
             } else {
+                $this->log('Request', $coingate);
                 return array(
                     'result'   => 'fail'
                 );
@@ -195,8 +197,11 @@ function coingate_init() {
                 $coingate = new CoingateMerchant(array('app_id' => $this->app_id, 'api_key' => $this->api_key, 'api_secret' => $this->api_secret, 'mode' => $this->test == 'yes' ? 'sandbox' : 'live'));
                 $coingate->get_order($request['id']);
 
-                if (!$coingate->success)
+                if (!$coingate->success) {
+                    $this->log('Callback', $coingate);
+
                     throw new Exception('CoinGate Order #' . $order->id . ' does not exists');
+                }
 
                 $coingate_response = json_decode($coingate->response, true);
 
@@ -213,7 +218,25 @@ function coingate_init() {
                 echo get_class($e) . ': ' . $e->getMessage();
             }
         }
-        
+
+        private function log($name, $coingate, $customData = '')
+        {
+            $logger = new WC_Logger();
+            $logger->add('coingate', $name
+                . ' - App ID: ' . $this->app_id
+                . '; Mode: ' . ($this->test == '1' ? 'sandbox' : 'live')
+                . '; HTTP Status: ' . $coingate->status_code
+                . '; Response: ' . $coingate->response
+                . '; cURL Error: ' . json_encode($coingate->curl_error)
+                . '; PHP Version: ' . phpversion()
+                . '; cURL Version: ' . json_encode(curl_version())
+                . '; WordPress Version: ' . get_bloginfo('version')
+                . '; WooCommerce Version: ' . WOOCOMMERCE_VERSION
+                . '; Plugin Version: ' . COINGATE_WOOCOMMERCE_VERSION
+                . $customData
+                . "\n");
+        }
+
         private function init_coingate_merchant_class() {
             return new CoingateMerchant(
                 array(
