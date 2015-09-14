@@ -191,10 +191,11 @@ function coingate_init() {
 
                 $token = get_post_meta($order->id, 'coingate_order_token', true);
 
-                if ($token == '' || $_GET['token'] != $token)
+                if (empty($token) || $_GET['token'] != $token) {
                     throw new Exception('Token: '.$_GET['token'].' do not match');
+                }
 
-                $coingate = new CoingateMerchant(array('app_id' => $this->app_id, 'api_key' => $this->api_key, 'api_secret' => $this->api_secret, 'mode' => $this->test == 'yes' ? 'sandbox' : 'live'));
+                $coingate = $this->init_coingate_merchant_class();
                 $coingate->get_order($request['id']);
 
                 if (!$coingate->success) {
