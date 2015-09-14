@@ -14,7 +14,7 @@
 
 add_action('plugins_loaded', 'coingate_init');
 
-define('COINGATE_WOOCOMMERCE_VERSION', '1.0.2');
+define('COINGATE_WOOCOMMERCE_VERSION', '1.0.3');
 
 function coingate_init() {
     if (!class_exists('WC_Payment_Gateway')) {
@@ -156,7 +156,7 @@ function coingate_init() {
                 'cancel_url'        => $order->get_cancel_order_url(),
                 'callback_url'      => trailingslashit(get_bloginfo('wpurl')) . '?wc-api=wc_gateway_coingate&token=' . $token,
                 'success_url'       => add_query_arg('order', $order->id, add_query_arg('key', $order->order_key, get_permalink(woocommerce_get_page_id('thanks')))),
-                'title'             => get_bloginfo( 'name', 'display' ) . ' Order #' . $order->id,
+                'title'             => get_bloginfo( 'name', 'raw' ) . ' Order #' . $order->id,
                 'description'       => join($description, ', ')
             ));
 
