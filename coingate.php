@@ -59,7 +59,6 @@ function coingate_init()
             ?>
                 <h3><?php _e('CoinGate', 'woothemes'); ?></h3>
                 <p><?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.', 'woothemes'); ?></p>
-                <p style="display: block; background: #d9edf7; border: 1px solid #bce8f1; color: #31708f; padding: 12px;"><strong>Having trouble?</strong> We can help you! Download the log file from <code><?php echo wc_get_log_file_path('coingate'); ?></code> and send it to <a href="mailto:support@coingate.com">support@coingate.com</a></p>
                 <table class="form-table">
                     <?php $this->generate_settings_html(); ?>
                 </table>
@@ -173,8 +172,6 @@ function coingate_init()
                     'redirect' => $order->payment_url,
                 );
             } else {
-                $this->log('Request');
-
                 return array(
                     'result' => 'fail',
                 );
@@ -208,8 +205,6 @@ function coingate_init()
                 $cgOrder = \CoinGate\Merchant\Order::find($request['id']);
 
                 if (!$cgOrder) {
-                    $this->log('Callback');
-
                     throw new Exception('CoinGate Order #'.$order->id.' does not exists');
                 }
 
@@ -228,21 +223,6 @@ function coingate_init()
             } catch (Exception $e) {
                 echo get_class($e).': '.$e->getMessage();
             }
-        }
-
-        private function log($name, $customData = '')
-        {
-            $logger = new WC_Logger();
-            $logger->add('coingate', $name
-                .' - App ID: '.$this->app_id
-                .'; Mode: '.($this->test == '1' ? 'sandbox' : 'live')
-                .'; PHP Version: '.phpversion()
-                .'; cURL Version: '.json_encode(curl_version())
-                .'; WordPress Version: '.get_bloginfo('version')
-                .'; WooCommerce Version: '.WOOCOMMERCE_VERSION
-                .'; Plugin Version: '.COINGATE_WOOCOMMERCE_VERSION
-                .$customData
-                ."\n");
         }
 
         private function init_coingate()
