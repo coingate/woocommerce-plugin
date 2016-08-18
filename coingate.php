@@ -247,15 +247,15 @@ function coingate_init()
 
         private function init_coingate()
         {
-            \CoinGate\CoinGate::config(
-                array(
-                    'app_id' => $this->app_id,
-                    'api_key' => $this->api_key,
-                    'api_secret' => $this->api_secret,
-                    'mode' => $this->test == '1' ? 'sandbox' : 'live',
-                    'user_agent' => 'CoinGate - WooCommerce Plugin v'.COINGATE_WOOCOMMERCE_VERSION,
-                )
-              );
+          \CoinGate\CoinGate::config(
+            array(
+              'app_id' => $this->app_id,
+              'api_key' => $this->api_key,
+              'api_secret' => $this->api_secret,
+              'mode' => $this->test == '1' ? 'sandbox' : 'live',
+              'user_agent' => 'CoinGate - WooCommerce v' . WOOCOMMERCE_VERSION . ' Plugin v'.COINGATE_WOOCOMMERCE_VERSION,
+            )
+            );
         }
     }
 
