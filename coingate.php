@@ -46,12 +46,13 @@ function coingate_init()
       $this->api_key = $this->get_option('api_key');
       $this->api_secret = $this->get_option('api_secret');
       $this->receive_currency = $this->get_option('receive_currency');
+      $this->order_statuses = $this->get_option('order_statuses');
       $this->test = ('yes' === $this->get_option('test', 'no'));
 
-      add_action('woocommerce_update_options_payment_gateways_'.$this->id, array($this, 'process_admin_options'));
+      add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+      add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'save_order_statuses'));
       add_action('woocommerce_thankyou_coingate', array($this, 'thankyou'));
-      add_action('coingate_callback', array($this, 'payment_callback'));
-      add_action('woocommerce_api_wc_gateway_coingate', array($this, 'check_callback_request'));
+      add_action('woocommerce_api_wc_gateway_coingate', array($this, 'payment_callback'));
     }
 
     public function admin_options()
@@ -117,6 +118,9 @@ function coingate_init()
           'description' => __('The currency in which you wish to receive your payments.', 'woocomerce'),
           'default' => 'EUR',
         ),
+        'order_statuses' => array(
+          'type' => 'order_statuses'
+        ),
         'test' => array(
           'title' => __('Test', 'woocommerce'),
           'type' => 'checkbox',
@@ -178,12 +182,6 @@ function coingate_init()
       }
     }
 
-    public function check_callback_request()
-    {
-      @ob_clean();
-      do_action('coingate_callback', $_REQUEST);
-    }
-
     public function payment_callback($request)
     {
       global $woocommerce;
@@ -205,46 +203,154 @@ function coingate_init()
         $cgOrder = \CoinGate\Merchant\Order::find($request['id']);
 
         if (!$cgOrder) {
-          throw new Exception('CoinGate Order #'.$order->id.' does not exists');
+          throw new Exception('CoinGate Order #' . $order->id . ' does not exists');
         }
 
         if (!is_array($cgOrder)) {
           throw new Exception('Something wrong with callback');
         }
 
-        if ($cgOrder->status == 'paid') {
-          $order->add_order_note(__('Payment was completed successfully', 'woocomerce'));
-          $order->payment_complete();
-        } elseif ($cgOrder->status == 'refunded') {
-          $order->update_status('refunded', __('Payment refunded to customer', 'woocomerce'));
-        } elseif (in_array($coingate_response['status'], array('invalid', 'expired', 'canceled'))) {
-          $order->update_status('failed', __('Payment failed', 'woocomerce'));
+        $orderStatuses = $this->get_option('order_statuses');
+        $wcOrderStatus = $orderStatuses[$cgOrder->status];
+        exit($wcOrderStatus);
+
+        switch ($cgOrder->status) {
+          case 'paid':
+            $order->payment_complete();
+            $order->update_status($wcOrderStatus);
+            $order->add_order_note(__('The payment has been received and confirmed by the Bitcoin network.', 'coingate'));
+            break;
+          case 'invalid':
+            $order->update_status($wcOrderStatus);
+            $order->add_order_note(__('The payment is confirming.', 'coingate'));
+            break;
+          case 'expired':
+            $order->update_status($wcOrderStatus);
+            $order->add_order_note(__('The order has expired.', 'coingate'));
+            break;
+          case 'canceled':
+            $order->update_status($wcOrderStatus, 'asdasdas');
+            $order->add_order_note(__('The order was canceled.', 'coingate'));
+            break;
+          case 'refunded':
+            $order->update_status($wcOrderStatus);
+            $order->add_order_note(__('The transaction was refunded.', 'coingate'));
+            break;
         }
       } catch (Exception $e) {
         echo get_class($e).': '.$e->getMessage();
       }
     }
 
+    public function generate_order_statuses_html()
+    {
+      ob_start();
+
+      $cgStatuses      = $this->cgOrderStatuses();
+      $wcStatuses      = wc_get_order_statuses();
+      $defaultStatuses = array('paid' => 'wc-completed', 'invalid' => 'wc-failed', 'expired' => 'wc-cancelled', 'canceled' => 'wc-cancelled', 'refunded' => 'wc-refunded');
+
+      ?>
+        <tr valign="top">
+          <th scope="row" class="titledesc">Order Statuses:</th>
+          <td class="forminp" id="coingate_order_statuses">
+            <table cellspacing="0">
+              <?php
+                foreach ($cgStatuses as $cgStatusName => $cgStatusTitle) {
+                  ?>
+                    <tr>
+                      <th><?php echo $cgStatusTitle; ?></th>
+                      <td>
+                        <select name="woocommerce_coingate_order_statuses[<?php echo $cgStatusName; ?>]">
+                          <?php
+                            $orderStatuses = get_option('woocommerce_coingate_settings');
+                            $orderStatuses = $orderStatuses['order_statuses'];
+
+                            foreach ($wcStatuses as $wcStatusName => $wcStatusTitle) {
+                              $currentStatus = $orderStatuses[$cgStatusName];
+
+                              if (empty($currentStatus) === true)
+                                $currentStatus = $defaultStatuses[$cgStatusName];
+
+                                if ($currentStatus == $wcStatusName)
+                                  echo "<option value=\"$wcStatusName\" selected>$wcStatusTitle</option>";
+                                else
+                                  echo "<option value=\"$wcStatusName\">$wcStatusTitle</option>";
+                            }
+                          ?>
+                        </select>
+                      </td>
+                    </tr>
+                  <?php
+                }
+              ?>
+            </table>
+          </td>
+        </tr>
+      <?php
+
+      return ob_get_clean();
+    }
+
+    public function validate_order_statuses_field()
+    {
+        $orderStatuses = $this->get_option('order_statuses');
+
+        if (isset($_POST[$this->plugin_id . $this->id . '_order_statuses']))
+          $orderStatuses = $_POST[$this->plugin_id . $this->id . '_order_statuses'];
+
+        return $orderStatuses;
+    }
+
+    public function save_order_statuses()
+    {
+      $cgOrderStatuses = $this->cgOrderStatuses();
+      $wcStatuses      = wc_get_order_statuses();
+
+      if (isset($_POST['woocommerce_coingate_order_statuses']) === true) {
+        $cgSettings = get_option('woocommerce_coingate_settings');
+        $orderStatuses = $cgSettings['order_statuses'];
+
+        foreach ($cgOrderStatuses as $cgStatusName => $cgStatusTitle) {
+          if (isset($_POST['woocommerce_coingate_order_statuses'][$cgStatusName]) === false)
+            continue;
+
+          $wcStatusName = $_POST['woocommerce_coingate_order_statuses'][$cgStatusName];
+
+          if (array_key_exists($wcStatusName, $wcStauses) === true)
+            $orderStatuses[$cgStatusName] = $wcStatusName;
+        }
+
+        $cgSettings['order_statuses'] = $orderStatuses;
+        update_option('woocommerce_coingate_settings', $cgSettings);
+      }
+    }
+
+    private function cgOrderStatuses()
+    {
+      return array('paid' => 'Paid', 'invalid' => 'Invalid', 'expired' => 'Expired', 'canceled' => 'Canceled', 'refunded' => 'Refunded');
+    }
+
     private function init_coingate()
     {
       \CoinGate\CoinGate::config(
-      array(
-        'app_id'      => $this->app_id,
-        'api_key'     => $this->api_key,
-        'api_secret'  => $this->api_secret,
-        'environment' => ($this->test ? 'sandbox' : 'live'),
-        'user_agent'  => ('CoinGate - WooCommerce v' . WOOCOMMERCE_VERSION . ' Plugin v'.COINGATE_WOOCOMMERCE_VERSION),
-      )
-    );
+        array(
+          'app_id'      => $this->app_id,
+          'api_key'     => $this->api_key,
+          'api_secret'  => $this->api_secret,
+          'environment' => ($this->test ? 'sandbox' : 'live'),
+          'user_agent'  => ('CoinGate - WooCommerce v' . WOOCOMMERCE_VERSION . ' Plugin v' . COINGATE_WOOCOMMERCE_VERSION),
+        )
+      );
+    }
   }
-}
 
-function add_coingate_gateway($methods)
-{
-  $methods[] = 'WC_Gateway_Coingate';
+  function add_coingate_gateway($methods)
+  {
+    $methods[] = 'WC_Gateway_Coingate';
 
-  return $methods;
-}
+    return $methods;
+  }
 
-add_filter('woocommerce_payment_gateways', 'add_coingate_gateway');
+  add_filter('woocommerce_payment_gateways', 'add_coingate_gateway');
 }
