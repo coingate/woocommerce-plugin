@@ -214,12 +214,12 @@ function coingate_init()
         switch ($cgOrder->status) {
           case 'paid':
             $order->update_status($wcOrderStatus);
-            $order->add_order_note(__('The payment has been received and confirmed by the Bitcoin network.', 'coingate'));
+            $order->add_order_note(__('The payment has been received and confirmed.', 'coingate'));
             $order->payment_complete();
             break;
           case 'invalid':
             $order->update_status($wcOrderStatus);
-            $order->add_order_note(__('The payment is confirming.', 'coingate'));
+            $order->add_order_note(__('The payment is invalid.', 'coingate'));
             break;
           case 'expired':
             $order->update_status($wcOrderStatus);
@@ -231,7 +231,7 @@ function coingate_init()
             break;
           case 'refunded':
             $order->update_status($wcOrderStatus);
-            $order->add_order_note(__('The transaction was refunded.', 'coingate'));
+            $order->add_order_note(__('The payment was refunded.', 'coingate'));
             break;
         }
 
