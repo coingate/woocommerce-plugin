@@ -34,7 +34,7 @@ function coingate_init()
 
       $this->id = 'coingate';
       $this->has_fields = false;
-      $this->method_title = __('CoinGate', 'woocommerce');
+      $this->method_title = 'CoinGate';
       $this->icon = apply_filters('woocommerce_paypal_icon', PLUGIN_DIR.'assets/bitcoin.png');
 
       $this->init_form_fields();
@@ -182,8 +182,10 @@ function coingate_init()
       }
     }
 
-    public function payment_callback($request)
+    public function payment_callback()
     {
+      $request = $_REQUEST;
+
       global $woocommerce;
 
       $order = new WC_Order($request['order_id']);
@@ -206,19 +208,14 @@ function coingate_init()
           throw new Exception('CoinGate Order #' . $order->id . ' does not exists');
         }
 
-        if (!is_array($cgOrder)) {
-          throw new Exception('Something wrong with callback');
-        }
-
         $orderStatuses = $this->get_option('order_statuses');
         $wcOrderStatus = $orderStatuses[$cgOrder->status];
-        exit($wcOrderStatus);
 
         switch ($cgOrder->status) {
           case 'paid':
-            $order->payment_complete();
             $order->update_status($wcOrderStatus);
             $order->add_order_note(__('The payment has been received and confirmed by the Bitcoin network.', 'coingate'));
+            $order->payment_complete();
             break;
           case 'invalid':
             $order->update_status($wcOrderStatus);
@@ -229,7 +226,7 @@ function coingate_init()
             $order->add_order_note(__('The order has expired.', 'coingate'));
             break;
           case 'canceled':
-            $order->update_status($wcOrderStatus, 'asdasdas');
+            $order->update_status($wcOrderStatus);
             $order->add_order_note(__('The order was canceled.', 'coingate'));
             break;
           case 'refunded':
@@ -237,8 +234,10 @@ function coingate_init()
             $order->add_order_note(__('The transaction was refunded.', 'coingate'));
             break;
         }
+
+        die('OK');
       } catch (Exception $e) {
-        echo get_class($e).': '.$e->getMessage();
+        die(get_class($e).': '.$e->getMessage());
       }
     }
 
