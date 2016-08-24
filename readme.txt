@@ -1,9 +1,9 @@
 === CoinGate for WooCommerce ===
 Contributors: CoinGate
-Donate link: https://coingate.com/
-Tags: coingate, bitcoin, payment gateway, woocommerce, btc, xbt
+Donate link: https://coingate.com
+Tags: coingate, bitcoin, payment gateway, payment module, woocommerce, btc, xbt
 Requires at least: 4.0
-Tested up to: 4.2.2
+Tested up to: 4.6
 Stable tag: trunk
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE.md
@@ -24,7 +24,7 @@ CoinGate is a bitcoin payment processor, which allows businesses to receive paym
   * Extract ZIP and upload extracted directory to the `/wp-content/plugins/` through FTP
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Create API Credentials in [coingate.com](https://coingate.com/) (or [sandbox.coignate.com](https://sandbox.coignate.com/) for testing)
-5. Enter API Credentials (App ID, Api Key, Api Secret) data to WooCommerce-Coingate Plugin Settings: Admin » WooCommerce » Click on Checkout tab » Find "Bitcoin" in Payment Gateways table » Click "Settings"
+5. Enter [API Credentials](http://support.coingate.com/knowledge_base/topics/how-can-i-create-coingate-api-credentials) (App ID, Api Key, Api Secret) data to WooCommerce-Coingate Plugin Settings: Admin » WooCommerce » Click on Checkout tab » Find "Bitcoin" in Payment Gateways table » Click "Settings"
 6. Don't forget check "Enable Bitcoin payment via CoinGate" checkbox in WooCommerce-Coingate Plugin settings
 
 [Plugin not working? Most common plugin issues](http://support.coingate.com/knowledge_base/topics/plugin-slash-extension-slash-module-not-working-common-issues)
@@ -34,4 +34,3 @@ CoinGate is a bitcoin payment processor, which allows businesses to receive paym
 1. WooCommerce-Coingate Plugin Settings
 2. Payout options in Woocommerce Checkout page
 3. CoinGate Payment Page
-
