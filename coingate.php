@@ -316,7 +316,7 @@ function coingate_init()
 
           $wcStatusName = $_POST['woocommerce_coingate_order_statuses'][$cgStatusName];
 
-          if (array_key_exists($wcStatusName, $wcStauses) === true)
+          if (array_key_exists($wcStatusName, $wcStatuses) === true)
             $orderStatuses[$cgStatusName] = $wcStatusName;
         }
 
