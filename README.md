@@ -22,7 +22,7 @@ You can sign up for CoinGate account at https://coingate.com for production and 
 
 ### via WooCommerce FTP Uploader
 
-1. Download [woocommerce-coingate-1.0.4.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v.1.0.4/woocommerce-coingate-1.0.4.zip).
+1. Download [woocommerce-coingate-1.0.5.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.0.5/woocommerce-coingate-1.0.5.zip).
 
 2. Go to *Admin » Plugins » Add New* in admin panel.
 
