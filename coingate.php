@@ -24,7 +24,7 @@ function coingate_init()
 
   define('PLUGIN_DIR', plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__)).'/');
 
-  require_once(dirname(__FILE__).'/lib/coingate/init.php');
+  require_once(__DIR__.'/lib/coingate/init.php');
 
   class WC_Gateway_Coingate extends WC_Payment_Gateway
   {
