@@ -4,7 +4,7 @@ CoinGate bitcoin payment gateway WooCommerce plugin.
 
 ## Install
 
-You can sign up for CoinGate account at https://coingate.com for production and https://sandbox.coingate.com for testing (sandbox) environment.
+Sign up for CoinGate account at https://coingate.com for production and https://sandbox.coingate.com for testing (sandbox) environment.
 
 ### via [WordPress Plugin Manager](https://codex.wordpress.org/Plugins_Add_New_Screen)
 
