@@ -6,7 +6,7 @@ Requires at least: 4.0
 Tested up to: 4.6
 Stable tag: trunk
 License: MIT
-License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE.md
+License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
 Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars
 
