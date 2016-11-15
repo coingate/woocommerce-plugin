@@ -216,15 +216,6 @@ function coingate_init()
             $order->update_status($wcOrderStatus);
             $order->add_order_note(__('The payment has been received and confirmed.', 'coingate'));
             $order->payment_complete();
-
-            $expired = $orderStatuses['expired'];
-            $canceled = $orderStatuses['canceled'];
-
-            if ($order->status == $expired || $order->status == $canceled) {
-                $email = new WC_Email_Customer_Processing_Order();
-                $email->trigger($order->id);
-            }
-
             break;
           case 'invalid':
             $order->update_status($wcOrderStatus);
