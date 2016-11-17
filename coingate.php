@@ -190,6 +190,7 @@ function coingate_init()
 
       $order = new WC_Order($request['order_id']);
 
+
       try {
         if (!$order || !$order->id) {
           throw new Exception('Order #'.$request['order_id'].' does not exists');
@@ -210,19 +211,20 @@ function coingate_init()
 
         $orderStatuses = $this->get_option('order_statuses');
         $wcOrderStatus = $orderStatuses[$cgOrder->status];
+        $wcExpiredStatus = $orderStatuses['expired'];
+        $wcCanceledStatus = $orderStatuses['canceled'];
+        $wcPaidStatus = $orderStatuses['paid'];
 
         switch ($cgOrder->status) {
           case 'paid':
+            $statusWas = "wc-" . $order->status;
+
             $order->update_status($wcOrderStatus);
             $order->add_order_note(__('The payment has been received and confirmed.', 'coingate'));
             $order->payment_complete();
 
-            $expired = $orderStatuses['expired'];
-            $canceled = $orderStatuses['canceled'];
-
-            if ($order->status == $expired || $order->status == $canceled) {
-                $email = new WC_Email_Customer_Processing_Order();
-                $email->trigger($order->id);
+            if ($order->status == 'processing' && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
+                WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger($order->id);
             }
 
             break;
@@ -256,7 +258,7 @@ function coingate_init()
 
       $cgStatuses      = $this->cgOrderStatuses();
       $wcStatuses      = wc_get_order_statuses();
-      $defaultStatuses = array('paid' => 'wc-completed', 'invalid' => 'wc-failed', 'expired' => 'wc-cancelled', 'canceled' => 'wc-cancelled', 'refunded' => 'wc-refunded');
+      $defaultStatuses = array('paid' => 'wc-processing', 'invalid' => 'wc-failed', 'expired' => 'wc-cancelled', 'canceled' => 'wc-cancelled', 'refunded' => 'wc-refunded');
 
       ?>
         <tr valign="top">
