@@ -226,7 +226,6 @@ function coingate_init()
             if ($order->status == 'processing' && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
                 WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger($order->id);
             }
-
             break;
           case 'invalid':
             $order->update_status($wcOrderStatus);
