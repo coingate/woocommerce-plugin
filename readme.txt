@@ -3,7 +3,7 @@ Contributors: CoinGate
 Donate link: https://coingate.com
 Tags: coingate, bitcoin, payment gateway, payment module, woocommerce, btc, xbt
 Requires at least: 4.0
-Tested up to: 4.7
+Tested up to: 4.7.1
 Stable tag: trunk
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE

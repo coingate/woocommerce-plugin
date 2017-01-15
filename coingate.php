@@ -4,7 +4,7 @@
 Plugin Name: WooCommerce Payment Gateway - CoinGate
 Plugin URI: https://coingate.com
 Description: Accept Bitcoin via CoinGate in your WooCommerce store
-Version: 1.0.7
+Version: 1.0.8
 Author: CoinGate
 Author URI: https://coingate.com
 License: MIT License
@@ -14,7 +14,7 @@ Github Plugin URI: https://github.com/coingate/woocommerce-plugin
 
 add_action('plugins_loaded', 'coingate_init');
 
-define('COINGATE_WOOCOMMERCE_VERSION', '1.0.7');
+define('COINGATE_WOOCOMMERCE_VERSION', '1.0.8');
 
 function coingate_init()
 {
@@ -59,7 +59,8 @@ function coingate_init()
     {
       ?>
       <h3><?php _e('CoinGate', 'woothemes'); ?></h3>
-      <p><?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.', 'woothemes'); ?></p>
+      <p><?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.<br>
+        <a href="https://developer.coingate.com/docs/issues" target="_blank">Not working? Common issues</a> &middot; <a href="mailto:support@coingate.com">support@coingate.com</a>', 'woothemes'); ?></p>
       <table class="form-table">
         <?php $this->generate_settings_html(); ?>
       </table>
@@ -111,11 +112,11 @@ function coingate_init()
           'title' => __('Receive Currency', 'woocommerce'),
           'type' => 'select',
           'options' => array(
-            'EUR' => __('Euros (€)', 'woocommerce'),
-            'USD' => __('US Dollars ($)', 'woocommerce'),
             'BTC' => __('Bitcoin (฿)', 'woocommerce'),
+            'EUR' => __('Euros (€)', 'woocommerce'),
+            'USD' => __('US Dollars ($)', 'woocommerce')
           ),
-          'description' => __('The currency in which you wish to receive your payments.', 'woocomerce'),
+          'description' => __('Currency you want to receive when making withdrawal at CoinGate. Please take a note what if you choose EUR or USD you will be asked to verify your business before making a withdrawal at CoinGate.', 'woocomerce'),
           'default' => 'EUR',
         ),
         'order_statuses' => array(
@@ -126,7 +127,8 @@ function coingate_init()
           'type' => 'checkbox',
           'label' => __('Enable test mode', 'woocommerce'),
           'default' => 'no',
-          'description' => __('Enable this to accept test payments (sandbox.coingate.com). <a href="http://support.coingate.com/knowledge_base/topics/how-can-i-test-your-service-without-signing-up" target="_blank">Read more about testing</a>', 'woocommerce'),
+          'description' => __('Enable "Test" to test on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a>. <a href="http://support.coingate.com/knowledge_base/topics/how-can-i-test-your-service-without-signing-up" target="_blank">Read more about testing</a>.<br>
+            Please note, that for "Test" mode you <b>must</b> generate separate API credentials on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a>. API credentials generated on <a href="https://coingate.com" target="_blank">coingate.com</a> will <b>not</b> work for "Test" mode.', 'woocommerce'),
         ),
       );
     }
@@ -247,8 +249,6 @@ function coingate_init()
             $order->add_order_note(__('The payment was refunded.', 'coingate'));
             break;
         }
-
-        die('OK');
       } catch (Exception $e) {
         die(get_class($e).': '.$e->getMessage());
       }
