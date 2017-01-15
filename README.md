@@ -6,7 +6,7 @@ CoinGate bitcoin payment gateway WooCommerce plugin.
 
 Sign up for CoinGate account at <https://coingate.com> for production and <https://sandbox.coingate.com> for testing (sandbox) environment.
 
-Please note, that for "Test" mode you **must** generate separate API credentials on <https://sandbox.coingate.com>. API credentials generated on <https://coingame.com> will **not** work for "Test" mode.
+Please note, that for "Test" mode you **must** generate separate API credentials on <https://sandbox.coingate.com>. API credentials generated on <https://coingate.com> will **not** work for "Test" mode.
 
 ### via [WordPress Plugin Manager](https://codex.wordpress.org/Plugins_Add_New_Screen)
 
