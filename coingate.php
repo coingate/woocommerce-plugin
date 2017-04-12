@@ -117,7 +117,7 @@ function coingate_init()
             'USD' => __('US Dollars ($)', 'woocommerce')
           ),
           'description' => __('Currency you want to receive when making withdrawal at CoinGate. Please take a note what if you choose EUR or USD you will be asked to verify your business before making a withdrawal at CoinGate.', 'woocomerce'),
-          'default' => 'EUR',
+          'default' => 'BTC',
         ),
         'order_statuses' => array(
           'type' => 'order_statuses'
