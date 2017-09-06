@@ -1,7 +1,7 @@
 === WooCommerce Bitcoin Payments and Altcoins - Accept Bitcoin with CoinGate ===
 Contributors: CoinGate
 Donate link: https://coingate.com
-Tags: coingate, bitcoin, accept bitcoin, altcoins, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
+Tags: coingate, bitcoin, accept bitcoin, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
 Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: trunk
@@ -14,7 +14,7 @@ The easiest and quickest way to accept Bitcoin and Altcoin payments, and receive
 
 = CoinGate Bitcoin Payment Gateway for WooCommerce =
 
-Using our **fully automated cryptocurrency processing platform and invoice system**, online businesses can **accept Bitcoin** as well as other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive **payouts in Euros and U.S. Dollars** directly to your bank account or PayPal. Alternatively, store owners can choose to receive *payouts in Bitcoin - *no verification*** procedures necessary.
+Using our **fully automated cryptocurrency processing platform and invoice system**, online businesses can **accept Bitcoin** as well as other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive **payouts in Euros and U.S. Dollars** directly to your bank account or PayPal. Alternatively, store owners can choose to receive **payouts in Bitcoin - *no verification** procedures necessary.
 
 == Start Accepting Bitcoin in Minutes! ==
 
@@ -44,8 +44,6 @@ The extension allows stores that use Wordpress WooCommerce shopping cart system 
 
 *To be able to use the plugin you have to create an account on [https://coingate.com](https://coingate.com)*
 
-[size=125][b]Installation Instructions[/b][/size]
-
 == Installation ==
 
 1. Install the CoinGate Bitcoin module. It can be done in three ways:
@@ -69,10 +67,3 @@ Having trouble setting it up? Check out the visual guide for installing the Bitc
 1. WooCommerce-Coingate Plugin Settings
 2. Payout options in WooCommerce Checkout page
 3. CoinGate Payment Page - Invoice
-
-
-
-
-
-
-
