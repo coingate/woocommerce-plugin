@@ -14,7 +14,7 @@ The easiest and quickest way to accept Bitcoin and Altcoin payments, and receive
 
 = CoinGate Bitcoin Payment Gateway for WooCommerce =
 
-Using our **fully automated cryptocurrency processing platform and invoice system**, online businesses can **accept Bitcoin** as well as other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive **payouts in Euros and U.S. Dollars** directly to your bank account or PayPal. Alternatively, store owners can choose to receive **payouts in Bitcoin - *no verification** procedures necessary.
+Using our **fully automated cryptocurrency processing platform and invoice system**, online businesses can **accept Bitcoin** as well as other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive **payouts in Euros and U.S. Dollars** directly to your bank account or PayPal. Alternatively, store owners can choose to receive **payouts in Bitcoin - no verification** procedures necessary.
 
 == Start Accepting Bitcoin in Minutes! ==
 
