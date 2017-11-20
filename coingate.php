@@ -160,6 +160,8 @@ function coingate_init()
         update_post_meta($order_id, 'coingate_order_token', $token);
       }
 
+      $wcOrder = wc_get_order($order_id);
+
       $order = \CoinGate\Merchant\Order::create(array(
         'order_id' => $order->id,
         'price' => number_format($order->get_total(), 2, '.', ''),
@@ -167,7 +169,7 @@ function coingate_init()
         'receive_currency' => $this->receive_currency,
         'cancel_url' => $order->get_cancel_order_url(),
         'callback_url' => trailingslashit(get_bloginfo('wpurl')).'?wc-api=wc_gateway_coingate&token='.$token,
-        'success_url' => add_query_arg('order', $order->id, add_query_arg('key', $order->order_key, get_permalink(woocommerce_get_page_id('thanks')))),
+        'success_url' => add_query_arg('order', $order->id, add_query_arg('key', $order->order_key, $this->get_return_url($wcOrder))),
         'title' => get_bloginfo('name', 'raw').' Order #'.$order->id,
         'description' => implode($description, ', '),
       ));
