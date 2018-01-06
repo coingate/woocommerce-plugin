@@ -164,7 +164,7 @@ function coingate_init()
 
       $order = \CoinGate\Merchant\Order::create(array(
         'order_id' => $order->id,
-        'price' => number_format($order->get_total(), 2, '.', ''),
+        'price' => number_format($order->get_total(), 8, '.', ''),
         'currency' => get_woocommerce_currency(),
         'receive_currency' => $this->receive_currency,
         'cancel_url' => $order->get_cancel_order_url(),
