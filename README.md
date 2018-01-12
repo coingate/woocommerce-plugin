@@ -27,7 +27,7 @@ Please note, that for "Test" mode you **must** generate separate API credentials
 
 ### via WooCommerce FTP Uploader
 
-1. Download [woocommerce-coingate-1.0.9.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.0.9/woocommerce-coingate-1.0.9.zip).
+1. Download [woocommerce-coingate-1.1.1.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.1.1/woocommerce-coingate-1.1.1.zip).
 
 2. Go to *Admin » Plugins » Add New* in admin panel.
 
@@ -41,7 +41,7 @@ Please note, that for "Test" mode you **must** generate separate API credentials
 
 ### via FTP
 
-1. Download [woocommerce-coingate-1.0.9.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.0.9/woocommerce-coingate-1.0.9.zip).
+1. Download [woocommerce-coingate-1.1.1.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.1.1/woocommerce-coingate-1.1.1.zip).
 
 2. Unzip and upload **woocommerce-coingate/** directory to **/wp-content/plugins/** through FTP.
 
