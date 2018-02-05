@@ -163,7 +163,7 @@ function coingate_init()
       $wcOrder = wc_get_order($order_id);
 
       $order = \CoinGate\Merchant\Order::create(array(
-        'order_id' => $order->id,
+        'order_id' => $order->get_id(),
         'price' => number_format($order->get_total(), 8, '.', ''),
         'currency' => get_woocommerce_currency(),
         'receive_currency' => $this->receive_currency,
