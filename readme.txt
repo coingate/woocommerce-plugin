@@ -64,6 +64,6 @@ Having trouble setting it up? Check out the visual guide for installing the Bitc
 
 == Screenshots ==
 
-1. WooCommerce-Coingate Plugin Settings
-2. Payout options in WooCommerce Checkout page
-3. CoinGate Payment Page - Invoice
+1. Cryptocurrency selection window
+2. Some of the cryptocurrencies supported by CoinGate
+3. CoinGate Bitcoin Payment Page - Invoice
