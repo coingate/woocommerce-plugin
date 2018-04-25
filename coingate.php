@@ -72,7 +72,7 @@ function coingate_init()
             $this->form_fields = array(
                 'enabled' => array(
                     'title' => __('Enable CoinGate', 'woocommerce'),
-                    'label' => __('Enable Bitcoin payment via CoinGate', 'woocommerce'),
+                    'label' => __('Enable Cryptocurrency payments via CoinGate', 'woocommerce'),
                     'type' => 'checkbox',
                     'description' => '',
                     'default' => 'no',
@@ -80,14 +80,14 @@ function coingate_init()
                 'description' => array(
                     'title' => __('Description', 'woocommerce'),
                     'type' => 'textarea',
-                    'description' => __('This controls the description which the user sees during checkout.', 'woocommerce'),
-                    'default' => __('Pay with Bitcoin via Coingate'),
+                    'description' => __('The payment method description which a user sees at the checkout of your store.', 'woocommerce'),
+                    'default' => __('Pay with BTC, LTC, ETH, XMR, XRP, BCH and other cryptocurrencies. Powered by CoinGate.'),
                 ),
                 'title' => array(
                     'title' => __('Title', 'woocommerce'),
                     'type' => 'text',
-                    'description' => __('Payment method title that the customer will see on your website.', 'woocommerce'),
-                    'default' => __('Bitcoin', 'woocommerce'),
+                    'description' => __('The payment method title which a customer sees at the checkout of your store.', 'woocommerce'),
+                    'default' => __('Cryptocurrencies via CoinGate (more than 50 supported)', 'woocommerce'),
                 ),
                 'api_auth_token' => array(
                     'title' => __('API Auth Token', 'woocommerce'),
@@ -101,21 +101,22 @@ function coingate_init()
                     'options' => array(
                         'BTC' => __('Bitcoin (฿)', 'woocommerce'),
                         'EUR' => __('Euros (€)', 'woocommerce'),
-                        'USD' => __('US Dollars ($)', 'woocommerce')
+                        'USD' => __('U.S. Dollars ($)', 'woocommerce')
                     ),
-                    'description' => __('Currency you want to receive when making withdrawal at CoinGate. Please take a note what if you choose EUR or USD you will be asked to verify your business before making a withdrawal at CoinGate.', 'woocomerce'),
+                    'description' => __('Choose the currency in which your payouts will be made (BTC, EUR or USD). For real-time EUR or USD settlements, you must verify as a merchant on CoinGate. Do not forget to add your Bitcoin address or bank details for payouts on <a href="https://coingate.com" target="_blank">your CoinGate account</a>.', 'woocomerce'),
                     'default' => 'BTC',
                 ),
                 'order_statuses' => array(
                     'type' => 'order_statuses'
                 ),
                 'test' => array(
-                    'title' => __('Test', 'woocommerce'),
+                    'title' => __('Test (Sandbox)', 'woocommerce'),
                     'type' => 'checkbox',
-                    'label' => __('Enable test mode', 'woocommerce'),
+                    'label' => __('Enable Test Mode (Sandbox)', 'woocommerce'),
                     'default' => 'no',
-                    'description' => __('Enable "Test" to test on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a>. <a href="http://support.coingate.com/knowledge_base/topics/how-can-i-test-your-service-without-signing-up" target="_blank">Read more about testing</a>.<br>
-            Please note, that for "Test" mode you <b>must</b> generate separate API credentials on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a>. API credentials generated on <a href="https://coingate.com" target="_blank">coingate.com</a> will <b>not</b> work for "Test" mode.', 'woocommerce'),
+                    'description' => __('To test on <a href="https://sandbox.coingate.com" target="_blank">CoinGate Sandbox</a>, turn Test Mode "On". 
+                    Please note, for Test Mode you must create a separate account on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a> and generate API credentials there. 
+                    API credentials generated on <a href="https://coingate.com" target="_blank">coingate.com</a> are "Live" credentials and will not work for "Test" mode.', 'woocommerce'),
                 ),
             );
         }
@@ -212,7 +213,7 @@ function coingate_init()
                         $statusWas = "wc-" . $order->status;
 
                         $order->update_status($wcOrderStatus);
-                        $order->add_order_note(__('Payment is confirmed by the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate'));
+                        $order->add_order_note(__('Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate'));
                         $order->payment_complete();
 
                         if ($order->status == 'processing' && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
