@@ -52,7 +52,7 @@ The extension allows stores that use Wordpress WooCommerce shopping cart system 
   * Extract ZIP and upload extracted directory to the `/wp-content/plugins/` through FTP
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Create API Credentials in [coingate.com](https://coingate.com/) (or [sandbox.coingate.com](https://sandbox.coingate.com/) for testing)
-5. Enter [API Credentials](http://support.coingate.com/knowledge_base/topics/how-can-i-create-coingate-api-credentials) (App ID, Api Key, Api Secret) data to WooCommerce-Coingate Plugin Settings: Admin » WooCommerce » Click on Checkout tab » Find "Bitcoin" in Payment Gateways table » Click "Settings"
+5. Enter [API Credentials](https://support.coingate.com/en/42/how-can-i-create-coingate-api-credentials) (Auth Token) data to WooCommerce-Coingate Plugin Settings: Admin » WooCommerce » Click on Checkout tab » Find "Bitcoin" in Payment Gateways table » Click "Settings"
 6. Don't forget check "Enable Cryptocurrency payments via CoinGate" checkbox in WooCommerce-Coingate Plugin settings
 
 = Step-by-step guide with screenshots =
