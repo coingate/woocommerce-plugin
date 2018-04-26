@@ -4,7 +4,7 @@
 Plugin Name: WooCommerce Payment Gateway - CoinGate
 Plugin URI: https://coingate.com
 Description: Accept Bitcoin via CoinGate in your WooCommerce store
-Version: 1.1.1
+Version: 1.2.0
 Author: CoinGate
 Author URI: https://coingate.com
 License: MIT License
