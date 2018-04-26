@@ -1,8 +1,8 @@
 # WooCommerce CoinGate Plugin
 
-Accept Bitcoin & Altcoins on your WooCommerce store.
+Accept Bitcoin and 50+ Cryptocurrencies on your WooCommerce store.
 
-Read the plugin installation instructions below to get started with CoinGate Bitcoin & Altcoin payment gateway on your shop.
+Read the plugin installation instructions below to get started with CoinGate Cryptocurrency payment gateway on your shop. Accept Bitcoin, Litecoin, Ethereum and other coins hassle-free - and receive settlements in Bitcoin or in Euros to your bank.
 Full setup guide with screenshots is also available on our blog: <https://blog.coingate.com/2017/05/install-woocommerce-bitcoin-plugin/>
 
 ## Install
@@ -21,9 +21,9 @@ Please note, that for "Test" mode you **must** generate separate API credentials
 
 4. Activate the plugin through the **Plugins** menu in WordPress.
 
-5. Enter [API Credentials](http://support.coingate.com/knowledge_base/topics/how-can-i-create-coingate-api-credentials) (*App ID*, *Api Key*, *Api Secret*) data to WooCommerce-Coingate Plugin Settings: *Admin » WooCommerce* click on **Checkout** tab find **Bitcoin** in Payment Gateways table and click **Settings**.
+5. Enter [API Credentials](https://support.coingate.com/en/42/how-can-i-create-coingate-api-credentials) (*Auth Token*) data to WooCommerce-Coingate Plugin Settings: *Admin » WooCommerce* click on **Checkout** tab find **Bitcoin** in Payment Gateways table and click **Settings**.
 
-6. Don't forget check **Enable Bitcoin payment via CoinGate** checkbox in WooCommerce-Coingate Plugin settings.
+6. Don't forget check **Enable Cryptocurrency payments via CoinGate** checkbox in WooCommerce-Coingate Plugin settings.
 
 ### via WooCommerce FTP Uploader
 
@@ -35,9 +35,9 @@ Please note, that for "Test" mode you **must** generate separate API credentials
 
 4. Activate the plugin through the **Plugins** menu in WordPress.
 
-5. Enter [API Credentials](http://support.coingate.com/knowledge_base/topics/how-can-i-create-coingate-api-credentials) (*App ID*, *Api Key*, *Api Secret*) data to WooCommerce-Coingate Plugin Settings: *Admin » WooCommerce* click on **Checkout** tab find **Bitcoin** in Payment Gateways table and click **Settings**.
+5. Enter [API Credentials](https://support.coingate.com/en/42/how-can-i-create-coingate-api-credentials) (*Auth Token*) data to WooCommerce-Coingate Plugin Settings: *Admin » WooCommerce* click on **Checkout** tab find **Bitcoin** in Payment Gateways table and click **Settings**.
 
-6. Don't forget check **Enable Bitcoin payment via CoinGate** checkbox in WooCommerce-Coingate Plugin settings.
+6. Don't forget check **Enable Cryptocurrency payments via CoinGate** checkbox in WooCommerce-Coingate Plugin settings.
 
 ### via FTP
 
@@ -47,6 +47,6 @@ Please note, that for "Test" mode you **must** generate separate API credentials
 
 3. Activate the plugin through the **Plugins** menu in WordPress.
 
-4. Enter [API Credentials](http://support.coingate.com/knowledge_base/topics/how-can-i-create-coingate-api-credentials) (*App ID*, *Api Key*, *Api Secret*) data to WooCommerce-Coingate Plugin Settings: *Admin » WooCommerce* click on **Checkout** tab find **Bitcoin** in Payment Gateways table and click **Settings**.
+4. Enter [API Credentials](https://support.coingate.com/en/42/how-can-i-create-coingate-api-credentials) (*Auth Token*) data to WooCommerce-Coingate Plugin Settings: *Admin » WooCommerce* click on **Checkout** tab find **Bitcoin** in Payment Gateways table and click **Settings**.
 
-5. Don't forget check **Enable Bitcoin payment via CoinGate** checkbox in WooCommerce-Coingate Plugin settings.
+5. Don't forget check **Enable Cryptocurrency payments via CoinGate** checkbox in WooCommerce-Coingate Plugin settings.
