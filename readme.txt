@@ -12,19 +12,23 @@ The easiest and quickest way to accept Bitcoin, Litecoin, Ethereum and other cry
 
 == Description ==
 
-= CoinGate Cryptocurrency Payment Gateway for WooCommerce =
+== CoinGate Cryptocurrency Payment Gateway for WooCommerce ==
 
-Using our **fully automated cryptocurrency processing platform and invoice system**, online businesses can **accept Bitcoin, Litecoin, Ethereum** as well as other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive **payouts in Euros and U.S. Dollars** directly to your bank account or PayPal. Alternatively, store owners can choose to receive **payouts in Bitcoin - no verification** procedures necessary.
+Start accepting Bitcoin and other cryptocurrencies in no time! Our official WooCommerce module connects your store to our **fully automated cryptocurrency processing platform and invoice system**, giving you access to the rapidly emerging blockchain market. 
+
+With CoinGate, online businesses can **accept Bitcoin, Litecoin, Ethereum** as well as 50+ other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive **payouts in Euros and U.S. Dollars** directly to your bank account. Alternatively, store owners can choose to receive **payouts in Bitcoin - no verification** procedures necessary.
 
 == Start Accepting Bitcoin in Minutes! ==
 
-The extension allows stores that use Wordpress WooCommerce shopping cart system to accept Bitcoin payments as well as Altcoins via the CoinGate API. Integration and configuration of our WooCommerce module is very straightforward, and the payment gateway is fully automated - you will receive automatic payment confirmations and order status updates. To find out more about the benefits of Cryptocurrencies for your business, as well as the solution offered by CoinGate, [*check our website*](https://coingate.com).
+The extension allows stores that use Wordpress WooCommerce shopping cart system to accept Bitcoin payments as well as Altcoins via the CoinGate API. Integration and configuration of our WooCommerce module is super simple, while the solution you get is fully automated - you will receive automatic payment confirmations and order status updates.
+
+To find out more about the benefits of Cryptocurrencies for your business, as well as the solution offered by CoinGate, [*check our website*](https://coingate.com).
 
 = Features =
 
 * The gateway is fully automatic - set it and forget it.
 * Payment amount is calculated using real-time exchange rates.
-* Your customers can select to pay with Bitcoin and 50+ other cryptocurrencies at checkout, while your payouts are in a single currency of your choice.
+* Simplicity for you, flexibility for your customers. On our invoices, a customer can choose to pay with Bitcoin, Litecoin, Ethereum and 50+ other cryptocurrencies at checkout, while your payouts are in a single currency of your choice (BTC or EUR).
 * [Sandbox environment](https://sandbox.coingate.com) for testing with Tesnet Bitcoin.
 * No setup or recurring fees.
 * No chargebacks - guaranteed!
