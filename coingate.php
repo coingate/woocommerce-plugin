@@ -14,7 +14,7 @@ Github Plugin URI: https://github.com/coingate/woocommerce-plugin
 
 add_action('plugins_loaded', 'coingate_init');
 
-define('COINGATE_WOOCOMMERCE_VERSION', '1.2.0-dev');
+define('COINGATE_WOOCOMMERCE_VERSION', '1.2.0');
 
 function coingate_init()
 {
