@@ -67,3 +67,4 @@ Having trouble setting it up? Check out the visual guide for installing the Bitc
 1. CoinGate payment form - cryptocurrency selection window
 2. Some of the 50+ cryptocurrencies supported by CoinGate
 3. CoinGate Bitcoin Payment Page - Invoice
+4. Merchant dashboard on CoinGate
