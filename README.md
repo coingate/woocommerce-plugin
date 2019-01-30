@@ -29,7 +29,7 @@ Also note, that *Receive Currency* parameter in your module configuration window
 
 ### via WooCommerce FTP Uploader
 
-1. Download [woocommerce-coingate-1.2.0.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.2.0/woocommerce-coingate-1.2.0.zip).
+1. Download [woocommerce-coingate-1.2.1.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.2.1/woocommerce-coingate-1.2.1.zip).
 
 2. Go to *Admin » Plugins » Add New* in admin panel.
 
@@ -43,7 +43,7 @@ Also note, that *Receive Currency* parameter in your module configuration window
 
 ### via FTP
 
-1. Download [woocommerce-coingate-1.2.0.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.2.0/woocommerce-coingate-1.2.0.zip).
+1. Download [woocommerce-coingate-1.2.1.zip](https://github.com/coingate/woocommerce-plugin/releases/download/v1.2.1/woocommerce-coingate-1.2.1.zip).
 
 2. Unzip and upload **woocommerce-coingate/** directory to **/wp-content/plugins/** through FTP.
 
