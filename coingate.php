@@ -4,7 +4,7 @@
 Plugin Name: WooCommerce Payment Gateway - CoinGate
 Plugin URI: https://coingate.com
 Description: Accept Bitcoin via CoinGate in your WooCommerce store
-Version: 1.2.0
+Version: 1.2.1
 Author: CoinGate
 Author URI: https://coingate.com
 License: MIT License
@@ -14,7 +14,7 @@ Github Plugin URI: https://github.com/coingate/woocommerce-plugin
 
 add_action('plugins_loaded', 'coingate_init');
 
-define('COINGATE_WOOCOMMERCE_VERSION', '1.2.0');
+define('COINGATE_WOOCOMMERCE_VERSION', '1.2.1');
 
 function coingate_init()
 {
@@ -115,8 +115,8 @@ function coingate_init()
                     'type' => 'checkbox',
                     'label' => __('Enable Test Mode (Sandbox)', 'woocommerce'),
                     'default' => 'no',
-                    'description' => __('To test on <a href="https://sandbox.coingate.com" target="_blank">CoinGate Sandbox</a>, turn Test Mode "On". 
-                    Please note, for Test Mode you must create a separate account on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a> and generate API credentials there. 
+                    'description' => __('To test on <a href="https://sandbox.coingate.com" target="_blank">CoinGate Sandbox</a>, turn Test Mode "On".
+                    Please note, for Test Mode you must create a separate account on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a> and generate API credentials there.
                     API credentials generated on <a href="https://coingate.com" target="_blank">coingate.com</a> are "Live" credentials and will not work for "Test" mode.', 'woocommerce'),
                 ),
             );
