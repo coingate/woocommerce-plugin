@@ -100,7 +100,7 @@ function coingate_init()
                     'type' => 'select',
                     'options' => array(
                         'BTC' => __('Bitcoin (฿)', 'woocommerce'),
-                        'USDT' => __('Tether USDT/EURT', 'woocommerce'),
+                        'USDT' => __('USDT (Ethereum)', 'woocommerce'),
                         'EUR' => __('Euros (€)', 'woocommerce'),
                         'USD' => __('U.S. Dollars ($)', 'woocommerce'),
                         'DO_NOT_CONVERT' => __('Do not convert', 'woocommerce')
