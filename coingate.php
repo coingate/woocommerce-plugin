@@ -158,7 +158,7 @@ function coingate_init()
                 'receive_currency'  => $this->receive_currency,
                 'cancel_url'        => $order->get_cancel_order_url(),
                 'callback_url'      => trailingslashit(get_bloginfo('wpurl')) . '?wc-api=wc_gateway_coingate',
-                'success_url'       => add_query_arg('order', $order->get_id(), add_query_arg('key', $order->get_order_key(), $this->get_return_url($wcOrder))),
+                'success_url'       => add_query_arg('order-received', $order->get_id(), add_query_arg('key', $order->get_order_key(), $this->get_return_url($wcOrder))),
                 'title'             => get_bloginfo('name', 'raw') . ' Order #' . $order->get_id(),
                 'description'       => implode($description, ', '),
                 'token'             => $token
