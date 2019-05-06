@@ -230,8 +230,11 @@ function coingate_init()
                         $order->add_order_note(__('Payment rejected by the network or did not confirm within 7 days.', 'coingate'));
                         break;
                     case 'expired':
-                        $order->update_status($wcOrderStatus);
-                        $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.', 'coingate'));
+                        if($order->get_payment_method() === "coingate") {
+                            $order->update_status($wcOrderStatus);
+                            $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.',
+                                'coingate'));
+                        }
                         break;
                     case 'canceled':
                         $order->update_status($wcOrderStatus);
