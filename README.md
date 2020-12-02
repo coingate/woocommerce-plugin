@@ -8,7 +8,7 @@ Stable tag: trunk
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
-== Description ==
+## Description
 
 ***Please note that we do not serve U.S. registered businesses due to regulatory reasons yet.***
 
