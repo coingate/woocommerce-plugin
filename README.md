@@ -1,4 +1,4 @@
-=== Accept Bitcoin and 50+ Cryptocurrencies with CoinGate ===
+# Accept Bitcoin and 50+ Cryptocurrencies with CoinGate
 Contributors: CoinGate
 Donate link: https://coingate.com
 Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, monero, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
@@ -19,7 +19,7 @@ With a simple installation of the CoinGate WooCommerce extension in your store's
 With CoinGate’s WooCommerce plugin, merchants can also receive real-time settlements of cryptocurrencies in *Euros - payouts are made directly to your bank account.* This way, businesses are not exposed to price volatility risk and can enjoy fixed payouts no matter the cryptocurrency’s price.
 Alternatively, store owners can choose to receive *payouts in cryptocurrency as well.*
 
-= Features =
+### Features
 
 * The gateway is fully automatic – set it and forget it.
 * Receive automatic payment confirmations and order status updates.
@@ -30,13 +30,13 @@ Alternatively, store owners can choose to receive *payouts in cryptocurrency as 
 * No setup or recurring fees.
 * No chargebacks – guaranteed!
 
-= Functionality =
+### Functionality
 
 * [Extend invoice expiration time](https://blog.coingate.com/2017/09/bitcoin-merchant-extend-invoice-expiration-time/) up to 24 hours (if payouts are in BTC).
 * Accept slight underpayments automatically.
 * Refunds can be issued directly from the invoice and without the involvement of the seller.
 
-= How it works - example =
+### How it works - example
 
 1. An item in the store costs 100 euro.
 2. A customer wants to buy the item and selects to pay with Bitcoin.
@@ -49,7 +49,7 @@ To use a plugin, a business is required to [pass the verification](https://blog.
 
 Any questions? Write to our support team at [support@coingate.com](mailto:support@coingate.com)
 
-== Installation ==
+## Installation
 
 First and foremost, you will need to sign up for an account on CoinGate. For production, use our main website: [https://coingate.com/](https://coingate.com). But before you go live, you may want to do some testing, to make sure everything works nicely. For this purpose, we have a sandbox environment: [https://sandbox.coingate.com](https://sandbox.coingate.com/) – just remember to create an account here even if you already have one on our main website.
 
@@ -71,10 +71,3 @@ For the testing mode to work, you must generate separate API credentials on [htt
 At this point, you can also configure how CoinGate order statuses will correspond to WooCommerce order statuses. Leave the default options if you are not sure.
 7. If you are using Sandbox API credentials, then turn Test Mode on.
 8. Finally, click “Save changes”, and you are good to go!
-
-== Screenshots ==
-
-1. CoinGate payment form - cryptocurrency selection window
-2. Some of the 50+ cryptocurrencies supported by CoinGate
-3. CoinGate Bitcoin Payment Page - Invoice
-4. Merchant dashboard on CoinGate
