@@ -42,8 +42,8 @@ To find out more about the benefits of Cryptocurrencies for your business, as we
 
 1. An item in the store costs 100 euro.
 2. A customer wants to buy the item and selects to pay with Bitcoin.
-3. An invoice is generated and, according to the current exchange rate, the price is 50,000 euro per bitcoin, so the customer has to pay 0.001 bitcoins.
-4. Once the invoice is paid, the merchant gets a notification and is credited 99 euro (100 euro minus our 1% flat fee), or 0.00099 BTC.
+3. An invoice is generated and, according to the current exchange rate, the price is 50,000 euro per bitcoin, so the customer has to pay 0.002 bitcoins.
+4. Once the invoice is paid, the merchant gets a notification and is credited 99 euro (100 euro minus our 1% flat fee), or 0.00198 BTC.
 
 To be able to use the plugin you have to create an account on https://coingate.com
 
