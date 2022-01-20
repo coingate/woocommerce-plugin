@@ -30,8 +30,6 @@ function coingate_init()
     {
         public function __construct()
         {
-            global $woocommerce;
-
             $this->id = 'coingate';
             $this->has_fields = false;
             $this->method_title = 'CoinGate';
@@ -58,8 +56,10 @@ function coingate_init()
         {
             ?>
             <h3><?php _e('CoinGate', 'woothemes'); ?></h3>
-            <p><?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.<br>
-        <a href="https://developer.coingate.com/docs/issues" target="_blank">Not working? Common issues</a> &middot; <a href="mailto:support@coingate.com">support@coingate.com</a>', 'woothemes'); ?></p>
+            <p>
+                <?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.<br>
+                <a href="https://developer.coingate.com/docs/issues" target="_blank">Not working? Common issues</a> &middot; <a href="mailto:support@coingate.com">support@coingate.com</a>', 'woothemes'); ?>
+            </p>
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
             </table>
@@ -132,8 +132,7 @@ function coingate_init()
 
         public function process_payment($order_id)
         {
-            global $woocommerce, $page, $paged;
-            $order = new WC_Order($order_id);
+            $order = wc_get_order($order_id);
 
             $this->init_coingate();
 
@@ -150,25 +149,24 @@ function coingate_init()
                 update_post_meta($order_id, 'coingate_order_token', $token);
             }
 
-            $wcOrder = wc_get_order($order_id);
-
-            $order = \CoinGate\Merchant\Order::create(array(
+            $cgOrder = \CoinGate\Merchant\Order::create(array(
                 'order_id'          => $order->get_id(),
                 'price_amount'      => number_format($order->get_total(), 8, '.', ''),
                 'price_currency'    => get_woocommerce_currency(),
                 'receive_currency'  => $this->receive_currency,
                 'cancel_url'        => $order->get_cancel_order_url(),
                 'callback_url'      => trailingslashit(get_bloginfo('wpurl')) . '?wc-api=wc_gateway_coingate',
-                'success_url'       => add_query_arg('order-received', $order->get_id(), add_query_arg('key', $order->get_order_key(), $this->get_return_url($wcOrder))),
+                'success_url'       => add_query_arg('order-received', $order->get_id(), add_query_arg('key', $order->get_order_key(), $this->get_return_url($order))),
                 'title'             => get_bloginfo('name', 'raw') . ' Order #' . $order->get_id(),
                 'description'       => implode(', ', $description),
-                'token'             => $token
+                'token'             => $token,
+                'purchaser_email'   => $order->get_billing_email(),
             ));
 
-            if ($order && $order->payment_url) {
+            if ($cgOrder && $cgOrder->payment_url) {
                 return array(
                     'result' => 'success',
-                    'redirect' => $order->payment_url,
+                    'redirect' => $cgOrder->payment_url,
                 );
             } else {
                 return array(
@@ -180,11 +178,7 @@ function coingate_init()
         public function payment_callback()
         {
             $request = $_REQUEST;
-
-            global $woocommerce;
-
-            $order = new WC_Order($request['order_id']);
-
+            $order = wc_get_order($request['order_id']);
 
             try {
                 if (!$order || !$order->get_id()) {
@@ -208,42 +202,45 @@ function coingate_init()
                 $wcOrderStatus = $orderStatuses[$cgOrder->status];
                 $wcExpiredStatus = $orderStatuses['expired'];
                 $wcCanceledStatus = $orderStatuses['canceled'];
-                $wcPaidStatus = $orderStatuses['paid'];
 
-                switch ($cgOrder->status) {
-                    case 'paid':
-                        $statusWas = "wc-" . $order->status;
-
-                        $order->update_status($wcOrderStatus);
-                        $order->add_order_note(__('Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate'));
-                        $order->payment_complete();
-
-                        if ($order->status == 'processing' && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
-                            WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger($order->get_id());
-                        }
-                        if (($order->status == 'processing' || $order->status == 'completed') && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
-                            WC()->mailer()->emails['WC_Email_New_Order']->trigger($order->get_id());
-                        }
-                        break;
-                    case 'invalid':
-                        $order->update_status($wcOrderStatus);
-                        $order->add_order_note(__('Payment rejected by the network or did not confirm within 7 days.', 'coingate'));
-                        break;
-                    case 'expired':
-                        if($order->get_payment_method() === "coingate") {
+                if ($wcOrderStatus == 'do-nothing') {
+					$order->add_order_note(__('CoinGate moved the invoice in their system to ' . $cgOrder->status . ', but no local changes were made.', 'coingate'));
+                } else {
+                    switch ($cgOrder->status) {
+                        case 'paid':
+                            $statusWas = "wc-" . $order->status;
+    
                             $order->update_status($wcOrderStatus);
-                            $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.',
-                                'coingate'));
-                        }
-                        break;
-                    case 'canceled':
-                        $order->update_status($wcOrderStatus);
-                        $order->add_order_note(__('Buyer canceled the invoice.', 'coingate'));
-                        break;
-                    case 'refunded':
-                        $order->update_status($wcOrderStatus);
-                        $order->add_order_note(__('Payment was refunded to the buyer.', 'coingate'));
-                        break;
+                            $order->add_order_note(__('Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate'));
+                            $order->payment_complete();
+    
+                            if ($order->status == 'processing' && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
+                                WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger($order->get_id());
+                            }
+                            if (($order->status == 'processing' || $order->status == 'completed') && ($statusWas == $wcExpiredStatus || $statusWas == $wcCanceledStatus)) {
+                                WC()->mailer()->emails['WC_Email_New_Order']->trigger($order->get_id());
+                            }
+                            break;
+                        case 'invalid':
+                            $order->update_status($wcOrderStatus);
+                            $order->add_order_note(__('Payment rejected by the network or did not confirm within 7 days.', 'coingate'));
+                            break;
+                        case 'expired':
+                            if($order->get_payment_method() === "coingate") {
+                                $order->update_status($wcOrderStatus);
+                                $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.',
+                                    'coingate'));
+                            }
+                            break;
+                        case 'canceled':
+                            $order->update_status($wcOrderStatus);
+                            $order->add_order_note(__('Buyer canceled the invoice.', 'coingate'));
+                            break;
+                        case 'refunded':
+                            $order->update_status($wcOrderStatus);
+                            $order->add_order_note(__('Payment was refunded to the buyer.', 'coingate'));
+                            break;
+                    }
                 }
             } catch (Exception $e) {
                 die(get_class($e) . ': ' . $e->getMessage());
@@ -255,7 +252,7 @@ function coingate_init()
             ob_start();
 
             $cgStatuses = $this->cgOrderStatuses();
-            $wcStatuses = wc_get_order_statuses();
+            $wcStatuses = wc_get_order_statuses() + array('do-nothing' => 'Do nothing');
             $defaultStatuses = array('paid' => 'wc-processing', 'invalid' => 'wc-failed', 'expired' => 'wc-cancelled', 'canceled' => 'wc-cancelled', 'refunded' => 'wc-refunded');
 
             ?>
