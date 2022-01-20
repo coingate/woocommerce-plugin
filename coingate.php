@@ -204,7 +204,7 @@ function coingate_init()
                 $wcCanceledStatus = $orderStatuses['canceled'];
 
                 if ($wcOrderStatus == 'do-nothing') {
-					$order->add_order_note(__('CoinGate moved the invoice in their system to ' . $cgOrder->status . ', but no local changes were made.', 'coingate'));
+                    $order->add_order_note(__('CoinGate moved the invoice in their system to ' . $cgOrder->status . ', but no local changes were made.', 'coingate'));
                 } else {
                     switch ($cgOrder->status) {
                         case 'paid':
