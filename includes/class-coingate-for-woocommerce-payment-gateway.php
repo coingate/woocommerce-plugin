@@ -394,7 +394,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
     private function init_coingate() {
         $auth_token = (empty($this->api_auth_token) ? $this->api_secret : $this->api_auth_token);
         $client = new Client($auth_token, $this->test);
-        $client::setAppInfo('Coingate For Woocommerce');
+        $client::setAppInfo('Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION);
 
         return $client;
     }
