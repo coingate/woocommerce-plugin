@@ -250,6 +250,10 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
                     WC()->mailer()->emails['WC_Email_New_Order']->trigger($order->get_id());
                 }
                 break;
+            case 'confirming' :
+                $order->update_status($wc_order_status);
+                $order->add_order_note(__('Shopper transferred the payment for the invoice. Awaiting blockchain network confirmation.', COINGATE_TRANSLATIONS));
+                break;
             case 'invalid':
                 $order->update_status($wc_order_status);
                 $order->add_order_note(__('Payment rejected by the network or did not confirm within 7 days.', COINGATE_TRANSLATIONS));
@@ -283,6 +287,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         $wc_statuses = wc_get_order_statuses();
         $default_statuses = array(
             'paid' => 'wc-processing',
+            'confirming' => 'wc-pending',
             'invalid' => 'wc-failed',
             'expired' => 'wc-cancelled',
             'canceled' => 'wc-cancelled',
@@ -379,6 +384,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
     private function coingate_order_statuses() {
         return array(
             'paid' => 'Paid',
+            'confirming' => 'Confirming',
             'invalid' => 'Invalid',
             'expired' => 'Expired',
             'canceled' => 'Canceled',
