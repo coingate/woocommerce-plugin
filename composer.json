@@ -21,6 +21,6 @@
         }
     ],
     "require": {
-        "coingate/coingate-php": "^4.0"
+        "coingate/coingate-php": "^4.1"
     }
 }

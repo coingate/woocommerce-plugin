@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eee161d3f52b120784a2d31412e34e0e",
+    "content-hash": "45c3ad542d835b56e7a3326373e823c5",
     "packages": [
         {
             "name": "coingate/coingate-php",
