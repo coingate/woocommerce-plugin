@@ -219,7 +219,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         if (!$this->is_token_valid($order, $request['token'])) {
             throw new Exception('CoinGate callback token does not match');
         }
-        
+
         if (!$order || !$order->get_id()) {
             throw new Exception('Order #' . $order->get_id() . ' does not exists');
         }
@@ -230,8 +230,8 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 
         // Get payment data from request due to security reason.
         $client = $this->init_coingate();
-        $cg_order = $client->order->get($request['id']);
-        if (!$cg_order instanceof Order || $order->get_id() !== $cg_order->order_id) {
+        $cg_order = $client->order->get((int) $request['id']);
+        if (!$cg_order || $order->get_id() !== (int)$cg_order->order_id) {
             throw new Exception('CoinGate Order #' . $order->get_id() . ' does not exists.');
         }
 
