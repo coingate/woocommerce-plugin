@@ -271,10 +271,8 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
                 $order->add_order_note(__('Payment rejected by the network or did not confirm within 7 days.', COINGATE_TRANSLATIONS));
                 break;
             case 'expired':
-                if($order->get_payment_method() === $this->id) {
-                    $order->update_status($wc_order_status);
-                    $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.', COINGATE_TRANSLATIONS));
-                }
+                $order->update_status($wc_order_status);
+                $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.', COINGATE_TRANSLATIONS));
                 break;
             case 'canceled':
                 $order->update_status($wc_order_status);
