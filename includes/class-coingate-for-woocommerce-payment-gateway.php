@@ -8,7 +8,6 @@ if ( ! class_exists( 'WC_Payment_Gateway' ) ) return;
 
 use CoinGate\Exception\ApiErrorException;
 use CoinGate\Client;
-use CoinGate\Resources\Order;
 
 /**
  * The functionality of the coingate payment gateway.
