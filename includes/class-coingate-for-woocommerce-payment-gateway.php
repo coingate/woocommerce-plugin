@@ -215,20 +215,24 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         global $woocommerce;
 
         $order = wc_get_order($request['order_id']);
-
+        
+        if (!$this->is_token_valid($order, $request['token'])) {
+            throw new Exception('CoinGate callback token does not match');
+        }
+        
         if (!$order || !$order->get_id()) {
-            throw new Exception('Order #' . $request['order_id'] . ' does not exists');
+            throw new Exception('Order #' . $order->get_id() . ' does not exists');
         }
 
-        if (!$this->is_payment_valid($order, $request['token'])) {
-            throw new Exception('CoinGate callback token does not match');
+        if ($order->get_payment_method() !== $this->id) {
+            throw new Exception('Order #' . $order->get_id() . ' payment method is not ' . $this->method_title);
         }
 
         // Get payment data from request due to security reason.
         $client = $this->init_coingate();
         $cg_order = $client->order->get($request['id']);
         if (!$cg_order instanceof Order || $order->get_id() !== $cg_order->order_id) {
-            throw new Exception('CoinGate Order #' . $order->get_id() . ' does not exists');
+            throw new Exception('CoinGate Order #' . $order->get_id() . ' does not exists.');
         }
 
         $callback_order_status = $cg_order->status;
@@ -425,13 +429,13 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
     }
 
     /**
-     * Check if payment is valid.
+     * Check token match.
      *
      * @param WC_Order $order
      * @param string $token
      * @return bool
      */
-    private function is_payment_valid(WC_Order $order, string $token) {
+    private function is_token_valid(WC_Order $order, string $token) {
         $order_token = $order->get_meta(static::ORDER_TOKEN_META_KEY);
 
         return !empty($order_token) && $token === $order_token;
