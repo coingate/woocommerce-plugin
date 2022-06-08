@@ -9,3 +9,4 @@ v2.0.0
 * Changed: Plugin refactored from the ground.
 * Added: API auth token validation.
 * Added: New status - "Do nothing" in the payment gateway settings page.
+* Added: New CoinGate payment status - "Confirming".
