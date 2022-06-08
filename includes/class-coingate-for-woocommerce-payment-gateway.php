@@ -210,9 +210,6 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
      */
     public function payment_callback() {
         $request = $_POST;
-
-        global $woocommerce;
-
         $order = wc_get_order($request['order_id']);
         
         if (!$this->is_token_valid($order, $request['token'])) {
