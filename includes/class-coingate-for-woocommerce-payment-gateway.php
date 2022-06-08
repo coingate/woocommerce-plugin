@@ -179,7 +179,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
             'price_currency'    => $order->get_currency(),
             'receive_currency'  => $this->receive_currency,
             'callback_url'      => trailingslashit(get_bloginfo('wpurl')) . '?wc-api=wc_gateway_coingate',
-            'cancel_url'        => $order->get_cancel_order_url(),
+            'cancel_url'        => $this->get_cancel_order_url($order),
             'success_url'       => add_query_arg('order-received', $order->get_id(), add_query_arg('key', $order->get_order_key(), $this->get_return_url($order))),
             'title'             => get_bloginfo('name', 'raw') . ' Order #' . $order->get_id(),
             'description'       => implode(', ', $description)
@@ -237,7 +237,10 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         $callback_order_status = $cg_order->status;
 
         $order_statuses = $this->get_option('order_statuses');
-        $wc_order_status = $order_statuses[$callback_order_status];
+        $wc_order_status = isset($order_statuses[$callback_order_status]) ? $order_statuses[$callback_order_status] : NULL;
+        if (!$wc_order_status) {
+            return;
+        }
 
         switch ($callback_order_status) {
             case 'paid':
@@ -247,7 +250,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 
                 $status_was = "wc-" . $order->get_status();
 
-                $order->update_status($wc_order_status);
+                $this->handle_order_status($order, $wc_order_status);
                 $order->add_order_note(__('Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', COINGATE_TRANSLATIONS));
                 $order->payment_complete();
 
@@ -262,26 +265,50 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
                 }
                 break;
             case 'confirming' :
-                $order->update_status($wc_order_status);
+                $this->handle_order_status($order, $wc_order_status);
                 $order->add_order_note(__('Shopper transferred the payment for the invoice. Awaiting blockchain network confirmation.', COINGATE_TRANSLATIONS));
                 break;
             case 'invalid':
-                $order->update_status($wc_order_status);
+                $this->handle_order_status($order, $wc_order_status);
                 $order->add_order_note(__('Payment rejected by the network or did not confirm within 7 days.', COINGATE_TRANSLATIONS));
                 break;
             case 'expired':
-                $order->update_status($wc_order_status);
+                $this->handle_order_status($order, $wc_order_status);
                 $order->add_order_note(__('Buyer did not pay within the required time and the invoice expired.', COINGATE_TRANSLATIONS));
                 break;
             case 'canceled':
-                $order->update_status($wc_order_status);
+                $this->handle_order_status($order, $wc_order_status);
                 $order->add_order_note(__('Buyer canceled the invoice.', COINGATE_TRANSLATIONS));
                 break;
             case 'refunded':
-                $order->update_status($wc_order_status);
+                $this->handle_order_status($order, $wc_order_status);
                 $order->add_order_note(__('Payment was refunded to the buyer.', COINGATE_TRANSLATIONS));
                 break;
         }
+    }
+
+    /**
+     * Generates a URL so that a customer can cancel their (unpaid - pending) order.
+     *
+     * @param WC_Order $order Order.
+     * @param string $redirect Redirect URL.
+     * @return string
+     */
+    public function get_cancel_order_url($order, $redirect = '' ) {
+        return apply_filters(
+            'woocommerce_get_cancel_order_url',
+            wp_nonce_url(
+                add_query_arg(
+                    array(
+                        'order'        => $order->get_order_key(),
+                        'order_id'     => $order->get_id(),
+                        'redirect'     => $redirect,
+                    ),
+                    $order->get_cancel_endpoint()
+                ),
+                'woocommerce-cancel_order'
+            )
+        );
     }
 
     /**
@@ -293,14 +320,16 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         ob_start();
 
         $cg_statuses = $this->coingate_order_statuses();
-        $wc_statuses = wc_get_order_statuses();
+        $default_status['ignore'] = __('Do nothing', COINGATE_TRANSLATIONS);
+        $wc_statuses = array_merge($default_status, wc_get_order_statuses());
+
         $default_statuses = array(
             'paid' => 'wc-processing',
-            'confirming' => 'wc-pending',
-            'invalid' => 'wc-failed',
-            'expired' => 'wc-cancelled',
-            'canceled' => 'wc-cancelled',
-            'refunded' => 'wc-refunded',
+            'confirming' => 'ignore',
+            'invalid' => 'ignore',
+            'expired' => 'ignore',
+            'canceled' => 'ignore',
+            'refunded' => 'ignore',
         );
 
         ?>
@@ -382,6 +411,18 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 
             $cg_settings['order_statuses'] = $order_statuses;
             update_option(static::SETTINGS_KEY, $cg_settings);
+        }
+    }
+
+    /**
+     * Handle order status.
+     *
+     * @param WC_Order $order
+     * @param string $status
+     */
+    protected function handle_order_status(WC_Order $order, string $status) {
+        if ($status !== 'ignore') {
+            $order->update_status($status);
         }
     }
 
