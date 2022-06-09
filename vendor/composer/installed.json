@@ -1,0 +1,70 @@
+{
+    "packages": [
+        {
+            "name": "coingate/coingate-php",
+            "version": "v4.1.0",
+            "version_normalized": "4.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coingate/coingate-php.git",
+                "reference": "e6758806364f00a75097ac7a0aee97c03d462085"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coingate/coingate-php/zipball/e6758806364f00a75097ac7a0aee97c03d462085",
+                "reference": "e6758806364f00a75097ac7a0aee97c03d462085",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "~1.4.10",
+                "phpunit/phpunit": "^5.7 || ^9.0",
+                "squizlabs/php_codesniffer": "~3.6.2"
+            },
+            "time": "2022-05-20T10:19:03+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "CoinGate\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CoinGate and contributors",
+                    "homepage": "https://github.com/coingate/coingate-php/graphs/contributors"
+                },
+                {
+                    "name": "Linas Pašviestis",
+                    "email": "linas.pasviestis@gmail.com"
+                }
+            ],
+            "description": "CoinGate library for PHP",
+            "homepage": "https://coingate.com",
+            "keywords": [
+                "altcoin",
+                "bitcoin",
+                "coingate",
+                "gateway",
+                "litecoin",
+                "merchant",
+                "payment"
+            ],
+            "support": {
+                "issues": "https://github.com/coingate/coingate-php/issues",
+                "source": "https://github.com/coingate/coingate-php/tree/v4.1.0"
+            },
+            "install-path": "../coingate/coingate-php"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

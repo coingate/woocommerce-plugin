@@ -1,0 +1,26 @@
+{
+    "name": "coingate/woocommerce-plugin",
+    "type": "library",
+    "description": "Accept Bitcoin and 70+ Cryptocurrencies via CoinGate in your WooCommerce store",
+    "keywords": [
+        "gateway",
+        "bitcoin",
+        "coingate",
+        "merchant",
+        "woocommerce",
+        "pay",
+        "payment",
+        "purchase"
+    ],
+    "homepage": "https://github.com/coingate/woocommerce-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CoinGate",
+            "email": "support@coingate.com"
+        }
+    ],
+    "require": {
+        "coingate/coingate-php": "^4.1"
+    }
+}
