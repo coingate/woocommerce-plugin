@@ -127,7 +127,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
      */
     public function thankyou() {
         if ($description = $this->get_description()) {
-            echo wpautop(wptexturize($description));
+            echo "<p>" . esc_html($description) . "</p>";
         }
     }
 
@@ -338,9 +338,9 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
                     foreach ($cg_statuses as $cg_status_name => $cg_status_title) {
                         ?>
                         <tr>
-                            <th><?php echo $cg_status_title; ?></th>
+                            <th><?php echo esc_html($cg_status_title); ?></th>
                             <td>
-                                <select name="woocommerce_coingate_order_statuses[<?php echo $cg_status_name; ?>]">
+                                <select name="woocommerce_coingate_order_statuses[<?php echo esc_html($cg_status_name); ?>]">
                                     <?php
                                     $cg_settings = get_option(static::SETTINGS_KEY);
                                     $order_statuses = $cg_settings['order_statuses'];
@@ -352,9 +352,9 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
                                             $current_status = $default_statuses[$cg_status_name];
 
                                         if ($current_status == $wc_status_name)
-                                            echo "<option value=\"$wc_status_name\" selected>$wc_status_title</option>";
+                                            echo "<option value='". esc_attr($wc_status_name) ."' selected>". esc_html($wc_status_title) ."</option>";
                                         else
-                                            echo "<option value=\"$wc_status_name\">$wc_status_title</option>";
+                                            echo "<option value='". esc_attr($wc_status_name) ."'>". esc_html($wc_status_title) ."</option>";
                                     }
                                     ?>
                                 </select>
