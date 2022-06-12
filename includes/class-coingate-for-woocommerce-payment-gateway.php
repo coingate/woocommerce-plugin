@@ -210,9 +210,9 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
      */
     public function payment_callback() {
         $request = $_POST;
-        $order = wc_get_order($request['order_id']);
+        $order = wc_get_order(sanitize_text_field($request['order_id']));
         
-        if (!$this->is_token_valid($order, $request['token'])) {
+        if (!$this->is_token_valid($order, sanitize_text_field($request['token']))) {
             throw new Exception('CoinGate callback token does not match');
         }
 
@@ -226,12 +226,12 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 
         // Get payment data from request due to security reason.
         $client = $this->init_coingate();
-        $cg_order = $client->order->get((int) $request['id']);
+        $cg_order = $client->order->get((int) sanitize_key($request['id']));
         if (!$cg_order || $order->get_id() !== (int)$cg_order->order_id) {
             throw new Exception('CoinGate Order #' . $order->get_id() . ' does not exists.');
         }
 
-        $callback_order_status = $cg_order->status;
+        $callback_order_status = sanitize_text_field($cg_order->status);
 
         $order_statuses = $this->get_option('order_statuses');
         $wc_order_status = isset($order_statuses[$callback_order_status]) ? $order_statuses[$callback_order_status] : NULL;
@@ -379,8 +379,10 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
     public function validate_order_statuses_field() {
         $order_statuses = $this->get_option('order_statuses');
 
-        if (isset($_POST[$this->plugin_id . $this->id . '_order_statuses']))
+        if (isset($_POST[$this->plugin_id . $this->id . '_order_statuses'])) {
             $order_statuses = $_POST[$this->plugin_id . $this->id . '_order_statuses'];
+            return array_map( 'sanitize_text_field', $order_statuses );
+        }
 
         return $order_statuses;
     }
@@ -392,17 +394,17 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         $coingate_order_statuses = $this->coingate_order_statuses();
         $wc_statuses = wc_get_order_statuses();
 
-        if (isset($_POST['woocommerce_coingate_order_statuses']) === true) {
+        if (isset($_POST['woocommerce_coingate_order_statuses'])) {
             $cg_settings = get_option(static::SETTINGS_KEY);
             $order_statuses = $cg_settings['order_statuses'];
 
             foreach ($coingate_order_statuses as $cg_status_name => $cg_status_title) {
-                if (isset($_POST['woocommerce_coingate_order_statuses'][$cg_status_name]) === false)
+                if (!isset($_POST['woocommerce_coingate_order_statuses'][$cg_status_name]))
                     continue;
 
-                $wc_status_name = $_POST['woocommerce_coingate_order_statuses'][$cg_status_name];
+                $wc_status_name = sanitize_text_field($_POST['woocommerce_coingate_order_statuses'][$cg_status_name]);
 
-                if (array_key_exists($wc_status_name, $wc_statuses) === true)
+                if (array_key_exists($wc_status_name, $wc_statuses))
                     $order_statuses[$cg_status_name] = $wc_status_name;
             }
 
@@ -474,6 +476,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
         $order_token = $order->get_meta(static::ORDER_TOKEN_META_KEY);
 
         return !empty($order_token) && $token === $order_token;
+
     }
 
 }
