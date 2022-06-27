@@ -36,17 +36,17 @@ require_once 'vendor/autoload.php';
 /**
  * Currently plugin version.
  */
-define('COINGATE_FOR_WOOCOMMERCE_VERSION', '2.0.0');
+define( 'COINGATE_FOR_WOOCOMMERCE_VERSION', '2.0.0' );
 
 /**
  * Currently plugin URL.
  */
-define('COINGATE_FOR_WOOCOMMERCE_PLUGIN_URL', plugin_dir_url(__FILE__));
+define( 'COINGATE_FOR_WOOCOMMERCE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Translations context.
  */
-define('COINGATE_TRANSLATIONS', 'coingate');
+define( 'COINGATE_TRANSLATIONS', 'coingate' );
 
 /**
  * The code that runs during plugin activation.

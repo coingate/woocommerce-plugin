@@ -50,7 +50,7 @@ class Coingate_For_Woocommerce_Public {
 	 * @param array $methods
 	 * @return array
 	 */
-	public function register_payment_gateway(array $methods) {
+	public function register_payment_gateway( array $methods) {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-coingate-for-woocommerce-payment-gateway.php';
 
 		if ( ! isset( $methods[ 'Coingate_Payment_Gateway' ] ) ) {
