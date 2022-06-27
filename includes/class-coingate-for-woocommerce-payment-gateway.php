@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * The functionality of the coingate payment gateway.
+ *
+ * @link       https://coingate.com
+ * @since      1.0.0
+ *
+ * @package    Coingate_For_Woocommerce
+ * @subpackage Coingate_For_Woocommerce/includes
+ */
+
 declare(strict_types=1);
 
 defined('ABSPATH') or exit;

@@ -3,6 +3,16 @@
 /**
  * The core plugin class.
  *
+ * @link       https://coingate.com
+ * @since      1.0.0
+ *
+ * @package    Coingate_For_Woocommerce
+ * @subpackage Coingate_For_Woocommerce/includes
+ */
+
+/**
+ * The core plugin class.
+ *
  * This is used to define internationalization, admin-specific hooks, and
  * public-facing site hooks.
  *

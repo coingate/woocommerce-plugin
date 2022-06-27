@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Register all actions and filters for the plugin
+ *
+ * @link       https://coingate.com
+ * @since      1.0.0
+ *
+ * @package    Coingate_For_Woocommerce
+ * @subpackage Coingate_For_Woocommerce/includes
+ */
+
+/**
  * Register all actions and filters for the plugin.
  *
  * Maintain a list of all hooks that are registered throughout
