@@ -18,7 +18,7 @@ class Coingate_For_Woocommerce_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-        delete_option('woocommerce_coingate_settings');
+		delete_option('woocommerce_coingate_settings');
 	}
 
 }

@@ -44,13 +44,13 @@ class Coingate_For_Woocommerce_Admin {
 
 	}
 
-    public function load_plugin() {
-        if (class_exists('woocommerce') === false) {
-            error_log(__('WooCommerce is not active', COINGATE_TRANSLATIONS));
-            return false;
-        }
+	public function load_plugin() {
+		if (class_exists('woocommerce') === false) {
+			error_log(__('WooCommerce is not active', COINGATE_TRANSLATIONS));
+			return false;
+		}
 
-        return true;
+		return true;
 	}
 
 }
