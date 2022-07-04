@@ -73,11 +73,17 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		<p>
 			<?php
 			esc_html_e(
-				'Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.<br>
-				<a href="https://developer.coingate.com/docs/issues" target="_blank">Not working? Common issues</a> &middot; <a href="mailto:support@coingate.com">support@coingate.com</a>',
+				'Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.',
 				'coingate'
 			);
 			?>
+			<br>
+			<a href="https://developer.coingate.com/docs/issues" target="_blank">
+			<?php
+			esc_html_e( 'Not working? Common issues' );
+			?>
+			</a> &middot;
+			<a href="mailto:support@coingate.com">support@coingate.com</a>
 		</p>
 		<table class="form-table">
 			<?php
@@ -409,8 +415,10 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		$order_statuses = $this->get_option( 'order_statuses' );
 
 		if ( isset( $_POST[ $this->plugin_id . $this->id . '_order_statuses' ] ) ) {
-			$order_statuses = sanitize_text_field( wp_unslash( $_POST[ $this->plugin_id . $this->id . '_order_statuses' ] ) );
-			return array_map( 'sanitize_text_field', $order_statuses );
+			return array_map(
+				'sanitize_text_field',
+				wp_unslash( $_POST[ $this->plugin_id . $this->id . '_order_statuses' ] )
+			);
 		}
 
 		return $order_statuses;
