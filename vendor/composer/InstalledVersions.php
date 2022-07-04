@@ -27,12 +27,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '2.x-dev',
-    'version' => '2.9999999.9999999.9999999-dev',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => 'a84e18d15de8e979d5068e0b58503156557d067a',
+    'reference' => '657058c5b12f7ddf9afd50900ff68ac5f06edb4f',
     'name' => 'coingate/woocommerce-plugin',
   ),
   'versions' => 
@@ -48,12 +48,12 @@ private static $installed = array (
     ),
     'coingate/woocommerce-plugin' => 
     array (
-      'pretty_version' => '2.x-dev',
-      'version' => '2.9999999.9999999.9999999-dev',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => 'a84e18d15de8e979d5068e0b58503156557d067a',
+      'reference' => '657058c5b12f7ddf9afd50900ff68ac5f06edb4f',
     ),
   ),
 );
