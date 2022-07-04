@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -25,7 +24,7 @@ class Coingate_For_Woocommerce_Activator {
 	/**
 	 * Active some settings after activated plugin.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public static function activate() {
 

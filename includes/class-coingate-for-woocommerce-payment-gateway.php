@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The functionality of the coingate payment gateway.
  *
@@ -12,9 +11,11 @@
 
 declare(strict_types=1);
 
-defined( 'ABSPATH' ) or exit;
+defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WC_Payment_Gateway' ) ) return;
+if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
+	return;
+}
 
 use CoinGate\Exception\ApiErrorException;
 use CoinGate\Client;
@@ -27,8 +28,7 @@ use CoinGate\Client;
  * @subpackage Coingate_For_Woocommerce/includes
  * @author     CoinGate <support@coingate.com>
  */
-class Coingate_Payment_Gateway extends WC_Payment_Gateway
-{
+class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 
 	public const ORDER_TOKEN_META_KEY = 'coingate_order_token';
 
@@ -65,11 +65,24 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	 */
 	public function admin_options() {
 		?>
-		<h3><?php _e( 'CoinGate', COINGATE_TRANSLATIONS ); ?></h3>
-		<p><?php _e('Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.<br>
-		<a href="https://developer.coingate.com/docs/issues" target="_blank">Not working? Common issues</a> &middot; <a href="mailto:support@coingate.com">support@coingate.com</a>', COINGATE_TRANSLATIONS); ?></p>
+		<h3>
+			<?php
+			esc_html_e( 'CoinGate', 'coingate' );
+			?>
+		</h3>
+		<p>
+			<?php
+			esc_html_e(
+				'Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.<br>
+				<a href="https://developer.coingate.com/docs/issues" target="_blank">Not working? Common issues</a> &middot; <a href="mailto:support@coingate.com">support@coingate.com</a>',
+				'coingate'
+			);
+			?>
+		</p>
 		<table class="form-table">
-			<?php $this->generate_settings_html(); ?>
+			<?php
+				$this->generate_settings_html();
+			?>
 		</table>
 		<?php
 	}
@@ -80,54 +93,57 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled' => array(
-				'title' => __( 'Enable CoinGate', COINGATE_TRANSLATIONS ),
-				'label' => __( 'Enable Cryptocurrency payments via CoinGate', COINGATE_TRANSLATIONS ),
-				'type' => 'checkbox',
+				'title'       => __( 'Enable CoinGate', 'coingate' ),
+				'label'       => __( 'Enable Cryptocurrency payments via CoinGate', 'coingate' ),
+				'type'        => 'checkbox',
 				'description' => '',
-				'default' => 'no',
+				'default'     => 'no',
 			),
 			'description' => array(
-				'title' => __( 'Description', COINGATE_TRANSLATIONS ),
-				'type' => 'textarea',
-				'description' => __( 'The payment method description which a user sees at the checkout of your store.', COINGATE_TRANSLATIONS ),
-				'default' => __( 'Pay with BTC, LTC, ETH, XMR, XRP, BCH and other cryptocurrencies. Powered by CoinGate.', COINGATE_TRANSLATIONS ),
+				'title'       => __( 'Description', 'coingate' ),
+				'type'        => 'textarea',
+				'description' => __( 'The payment method description which a user sees at the checkout of your store.', 'coingate' ),
+				'default'     => __( 'Pay with BTC, LTC, ETH, XMR, XRP, BCH and other cryptocurrencies. Powered by CoinGate.', 'coingate' ),
 			),
 			'title' => array(
-				'title' => __( 'Title', COINGATE_TRANSLATIONS ),
-				'type' => 'text',
-				'description' => __( 'The payment method title which a customer sees at the checkout of your store.', COINGATE_TRANSLATIONS ),
-				'default' => __( 'Cryptocurrencies via CoinGate (more than 50 supported)', COINGATE_TRANSLATIONS ),
+				'title'       => __( 'Title', 'coingate' ),
+				'type'        => 'text',
+				'description' => __( 'The payment method title which a customer sees at the checkout of your store.', 'coingate' ),
+				'default'     => __( 'Cryptocurrencies via CoinGate (more than 50 supported)', 'coingate' ),
 			),
 			'api_auth_token' => array(
-				'title' => __( 'API Auth Token', COINGATE_TRANSLATIONS ),
-				'type' => 'text',
-				'description' => __( 'CoinGate API Auth Token', COINGATE_TRANSLATIONS ),
-				'default' => ( empty( $this->get_option( 'api_secret' ) ) ? '' : $this->get_option( 'api_secret' ) ),
+				'title'       => __( 'API Auth Token', 'coingate' ),
+				'type'        => 'text',
+				'description' => __( 'CoinGate API Auth Token', 'coingate' ),
+				'default'     => ( empty( $this->get_option( 'api_secret' ) ) ? '' : $this->get_option( 'api_secret' ) ),
 			),
 			'receive_currency' => array(
-				'title' => __( 'Payout Currency', COINGATE_TRANSLATIONS ),
+				'title' => __( 'Payout Currency', 'coingate' ),
 				'type' => 'select',
 				'options' => array(
-					'BTC' => __( 'Bitcoin (฿)', COINGATE_TRANSLATIONS ),
-					'USDT' => __( 'USDT', COINGATE_TRANSLATIONS ),
-					'EUR' => __( 'Euros (€)', COINGATE_TRANSLATIONS ),
-					'USD' => __( 'U.S. Dollars ($)', COINGATE_TRANSLATIONS ),
-					'DO_NOT_CONVERT' => __( 'Do not convert', COINGATE_TRANSLATIONS )
+					'BTC'            => __( 'Bitcoin (฿)', 'coingate' ),
+					'USDT'           => __( 'USDT', 'coingate' ),
+					'EUR'            => __( 'Euros (€)', 'coingate' ),
+					'USD'            => __( 'U.S. Dollars ($)', 'coingate' ),
+					'DO_NOT_CONVERT' => __( 'Do not convert', 'coingate' ),
 				),
-				'description' => __( 'Choose the currency in which your payouts will be made (BTC, EUR or USD). For real-time EUR or USD settlements, you must verify as a merchant on CoinGate. Do not forget to add your Bitcoin address or bank details for payouts on <a href="https://coingate.com" target="_blank">your CoinGate account</a>.', COINGATE_TRANSLATIONS ),
+				'description' => __( 'Choose the currency in which your payouts will be made (BTC, EUR or USD). For real-time EUR or USD settlements, you must verify as a merchant on CoinGate. Do not forget to add your Bitcoin address or bank details for payouts on <a href="https://coingate.com" target="_blank">your CoinGate account</a>.', 'coingate' ),
 				'default' => 'BTC',
 			),
 			'order_statuses' => array(
-				'type' => 'order_statuses'
+				'type' => 'order_statuses',
 			),
 			'test' => array(
-				'title' => __( 'Test (Sandbox)', COINGATE_TRANSLATIONS ),
-				'type' => 'checkbox',
-				'label' => __( 'Enable Test Mode (Sandbox)', COINGATE_TRANSLATIONS ),
-				'default' => 'no',
-				'description' => __( 'To test on <a href="https://sandbox.coingate.com" target="_blank">CoinGate Sandbox</a>, turn Test Mode "On".
+				'title'       => __( 'Test (Sandbox)', 'coingate' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Enable Test Mode (Sandbox)', 'coingate' ),
+				'default'     => 'no',
+				'description' => __(
+					'To test on <a href="https://sandbox.coingate.com" target="_blank">CoinGate Sandbox</a>, turn Test Mode "On".
 					Please note, for Test Mode you must create a separate account on <a href="https://sandbox.coingate.com" target="_blank">sandbox.coingate.com</a> and generate API credentials there.
-					API credentials generated on <a href="https://coingate.com" target="_blank">coingate.com</a> are "Live" credentials and will not work for "Test" mode.', COINGATE_TRANSLATIONS ),
+					API credentials generated on <a href="https://coingate.com" target="_blank">coingate.com</a> are "Live" credentials and will not work for "Test" mode.',
+					'coingate'
+				),
 			),
 		);
 	}
@@ -136,23 +152,24 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	 * Thank you page.
 	 */
 	public function thankyou() {
-		if ( $description = $this->get_description() ) {
-			echo "<p>" . esc_html( $description ) . "</p>";
+		$description = $this->get_description();
+		if ( $description ) {
+			echo '<p>' . esc_html( $description ) . '</p>';
 		}
 	}
 
 	/**
 	 * Validate api_auth_token field.
 	 *
-	 * @param $key
-	 * @param $value
-	 * @return string
+	 * @param string $key Field key.
+	 * @param string $value Field value.
+	 * @return string Returns field value.
 	 */
 	public function validate_api_auth_token_field( $key, $value ) {
 		$post_data = $this->get_post_data();
 		$mode = $post_data['woocommerce_coingate_test'];
 
-		if ( !empty( $value ) ) {
+		if ( ! empty( $value ) ) {
 			$client = new Client();
 			$result = $client::testConnection( $value, (bool) $mode );
 
@@ -161,7 +178,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 			}
 		}
 
-		WC_Admin_Settings::add_error( esc_html__( 'API Auth Token is invalid. Your changes have not been saved.', COINGATE_TRANSLATIONS ) );
+		WC_Admin_Settings::add_error( esc_html__( 'API Auth Token is invalid. Your changes have not been saved.', 'coingate' ) );
 
 		return '';
 	}
@@ -169,8 +186,10 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Payment process.
 	 *
-	 * @param int $order_id
+	 * @param int $order_id The order ID.
 	 * @return string[]
+	 *
+	 * @throws Exception Unknown exception type.
 	 */
 	public function process_payment( $order_id ) {
 		global $woocommerce, $page, $paged;
@@ -183,29 +202,27 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 			$description[] = $item['qty'] . ' × ' . $item['name'];
 		}
 
-		$params = [
-			'order_id'          => $order->get_id(),
-			'price_amount'      => $order->get_total(),
-			'price_currency'    => $order->get_currency(),
-			'receive_currency'  => $this->receive_currency,
-			'callback_url'      => trailingslashit( get_bloginfo( 'wpurl' ) ) . '?wc-api=wc_gateway_coingate',
-			'cancel_url'        => $this->get_cancel_order_url( $order ),
-			'success_url'       => add_query_arg( 'order-received', $order->get_id(), add_query_arg( 'key', $order->get_order_key(), $this->get_return_url( $order ) ) ),
-			'title'             => get_bloginfo( 'name', 'raw' ) . ' Order #' . $order->get_id(),
-			'description'       => implode( ', ', $description )
-		];
+		$params = array(
+			'order_id'         => $order->get_id(),
+			'price_amount'     => $order->get_total(),
+			'price_currency'   => $order->get_currency(),
+			'receive_currency' => $this->receive_currency,
+			'callback_url'     => trailingslashit( get_bloginfo( 'wpurl' ) ) . '?wc-api=wc_gateway_coingate',
+			'cancel_url'       => $this->get_cancel_order_url( $order ),
+			'success_url'      => add_query_arg( 'order-received', $order->get_id(), add_query_arg( 'key', $order->get_order_key(), $this->get_return_url( $order ) ) ),
+			'title'            => get_bloginfo( 'name', 'raw' ) . ' Order #' . $order->get_id(),
+			'description'      => implode( ', ', $description ),
+		);
 
-		$response = [ 'result' => 'fail' ];
+		$response = array( 'result' => 'fail' );
 
 		try {
 			$gateway_order = $client->order->create( $params );
 			if ( $gateway_order ) {
 				update_post_meta( $order->get_id(), static::ORDER_TOKEN_META_KEY, $gateway_order->token );
-
 				$response['result'] = 'success';
 				$response['redirect'] = $gateway_order->payment_url;
 			}
-
 		} catch ( ApiErrorException $exception ) {
 			error_log( $exception );
 		}
@@ -216,7 +233,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Payment callback.
 	 *
-	 * @throws Exception
+	 * @throws Exception Unknown exception type.
 	 */
 	public function payment_callback() {
 		$request = $_POST;
@@ -244,7 +261,7 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 		$callback_order_status = sanitize_text_field( $cg_order->status );
 
 		$order_statuses = $this->get_option( 'order_statuses' );
-		$wc_order_status = isset( $order_statuses[$callback_order_status] ) ? $order_statuses[$callback_order_status] : NULL;
+		$wc_order_status = isset( $order_statuses[ $callback_order_status ] ) ? $order_statuses[ $callback_order_status ] : null;
 		if ( ! $wc_order_status ) {
 			return;
 		}
@@ -255,41 +272,41 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 					throw new Exception( 'CoinGate Order #' . $order->get_id() . ' amounts do not match' );
 				}
 
-				$status_was = "wc-" . $order->get_status();
+				$status_was = 'wc-' . $order->get_status();
 
 				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', COINGATE_TRANSLATIONS ) );
+				$order->add_order_note( __( 'Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate' ) );
 				$order->payment_complete();
 
 				$wc_expired_status = $order_statuses['expired'];
 				$wc_canceled_status = $order_statuses['canceled'];
 
-				if ( $order->status == 'processing' && ( $status_was == $wc_expired_status || $status_was == $wc_canceled_status ) ) {
+				if ( 'processing' === $order->status && ( $status_was === $wc_expired_status || $status_was === $wc_canceled_status ) ) {
 					WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger( $order->get_id() );
 				}
-				if ( ( $order->status == 'processing' || $order->status == 'completed' ) && ( $status_was == $wc_expired_status || $status_was == $wc_canceled_status ) ) {
+				if ( ( 'processing' === $order->status || 'completed' === $order->status ) && ( $status_was === $wc_expired_status || $status_was === $wc_canceled_status ) ) {
 					WC()->mailer()->emails['WC_Email_New_Order']->trigger( $order->get_id() );
 				}
 				break;
-			case 'confirming' :
+			case 'confirming':
 				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Shopper transferred the payment for the invoice. Awaiting blockchain network confirmation.', COINGATE_TRANSLATIONS ) );
+				$order->add_order_note( __( 'Shopper transferred the payment for the invoice. Awaiting blockchain network confirmation.', 'coingate' ) );
 				break;
 			case 'invalid':
 				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Payment rejected by the network or did not confirm within 7 days.', COINGATE_TRANSLATIONS ) );
+				$order->add_order_note( __( 'Payment rejected by the network or did not confirm within 7 days.', 'coingate' ) );
 				break;
 			case 'expired':
 				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __('Buyer did not pay within the required time and the invoice expired.', COINGATE_TRANSLATIONS ) );
+				$order->add_order_note( __( 'Buyer did not pay within the required time and the invoice expired.', 'coingate' ) );
 				break;
 			case 'canceled':
 				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Buyer canceled the invoice.', COINGATE_TRANSLATIONS ) );
+				$order->add_order_note( __( 'Buyer canceled the invoice.', 'coingate' ) );
 				break;
 			case 'refunded':
 				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Payment was refunded to the buyer.', COINGATE_TRANSLATIONS ) );
+				$order->add_order_note( __( 'Payment was refunded to the buyer.', 'coingate' ) );
 				break;
 		}
 	}
@@ -297,8 +314,8 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Generates a URL so that a customer can cancel their (unpaid - pending) order.
 	 *
-	 * @param WC_Order $order Order.
-	 * @param string $redirect Redirect URL.
+	 * @param WC_Order $order    Order.
+	 * @param string   $redirect Redirect URL.
 	 * @return string
 	 */
 	public function get_cancel_order_url( $order, $redirect = '' ) {
@@ -307,9 +324,9 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 			wp_nonce_url(
 				add_query_arg(
 					array(
-						'order'        => $order->get_order_key(),
-						'order_id'     => $order->get_id(),
-						'redirect'     => $redirect,
+						'order'    => $order->get_order_key(),
+						'order_id' => $order->get_id(),
+						'redirect' => $redirect,
 					),
 					$order->get_cancel_endpoint()
 				),
@@ -327,21 +344,21 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 		ob_start();
 
 		$cg_statuses = $this->coingate_order_statuses();
-		$default_status['ignore'] = __( 'Do nothing', COINGATE_TRANSLATIONS );
+		$default_status['ignore'] = __( 'Do nothing', 'coingate' );
 		$wc_statuses = array_merge( $default_status, wc_get_order_statuses() );
 
 		$default_statuses = array(
-			'paid' => 'wc-processing',
+			'paid'       => 'wc-processing',
 			'confirming' => 'ignore',
-			'invalid' => 'ignore',
-			'expired' => 'ignore',
-			'canceled' => 'ignore',
-			'refunded' => 'ignore',
+			'invalid'    => 'ignore',
+			'expired'    => 'ignore',
+			'canceled'   => 'ignore',
+			'refunded'   => 'ignore',
 		);
 
 		?>
 		<tr valign="top">
-			<th scope="row" class="titledesc"> <?php _e( 'Order Statuses:', COINGATE_TRANSLATIONS ) ?></th>
+			<th scope="row" class="titledesc"> <?php esc_html_e( 'Order Statuses:', 'coingate' ); ?></th>
 			<td class="forminp" id="coingate_order_statuses">
 				<table cellspacing="0">
 					<?php
@@ -356,15 +373,17 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 									$order_statuses = $cg_settings['order_statuses'];
 
 									foreach ( $wc_statuses as $wc_status_name => $wc_status_title ) {
-										$current_status = $order_statuses[$cg_status_name];
+										$current_status = $order_statuses[ $cg_status_name ];
 
-										if ( empty( $current_status ) )
-											$current_status = $default_statuses[$cg_status_name];
+										if ( empty( $current_status ) ) {
+											$current_status = $default_statuses[ $cg_status_name ];
+										}
 
-										if ( $current_status == $wc_status_name )
-											echo "<option value='". esc_attr( $wc_status_name ) ."' selected>". esc_html( $wc_status_title ) ."</option>";
-										else
-											echo "<option value='". esc_attr( $wc_status_name ) ."'>". esc_html( $wc_status_title ) ."</option>";
+										if ( $current_status === $wc_status_name ) {
+											echo '<option value="' . esc_attr( $wc_status_name ) . '" selected>' . esc_html( $wc_status_title ) . '</option>';
+										} else {
+											echo '<option value="' . esc_attr( $wc_status_name ) . '">' . esc_html( $wc_status_title ) . '</option>';
+										}
 									}
 									?>
 								</select>
@@ -389,8 +408,8 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	public function validate_order_statuses_field() {
 		$order_statuses = $this->get_option( 'order_statuses' );
 
-		if ( isset( $_POST[$this->plugin_id . $this->id . '_order_statuses'] ) ) {
-			$order_statuses = $_POST[$this->plugin_id . $this->id . '_order_statuses'];
+		if ( isset( $_POST[ $this->plugin_id . $this->id . '_order_statuses' ] ) ) {
+			$order_statuses = sanitize_text_field( wp_unslash( $_POST[ $this->plugin_id . $this->id . '_order_statuses' ] ) );
 			return array_map( 'sanitize_text_field', $order_statuses );
 		}
 
@@ -409,13 +428,15 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 			$order_statuses = $cg_settings['order_statuses'];
 
 			foreach ( $coingate_order_statuses as $cg_status_name => $cg_status_title ) {
-				if ( ! isset( $_POST['woocommerce_coingate_order_statuses'][$cg_status_name] ) )
+				if ( ! isset( $_POST['woocommerce_coingate_order_statuses'][ $cg_status_name ] ) ) {
 					continue;
+				}
 
-				$wc_status_name = sanitize_text_field( $_POST['woocommerce_coingate_order_statuses'][$cg_status_name] );
+				$wc_status_name = sanitize_text_field( wp_unslash( $_POST['woocommerce_coingate_order_statuses'][ $cg_status_name ] ) );
 
-				if ( array_key_exists( $wc_status_name, $wc_statuses ) )
-					$order_statuses[$cg_status_name] = $wc_status_name;
+				if ( array_key_exists( $wc_status_name, $wc_statuses ) ) {
+					$order_statuses[ $cg_status_name ] = $wc_status_name;
+				}
 			}
 
 			$cg_settings['order_statuses'] = $order_statuses;
@@ -426,11 +447,11 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Handle order status.
 	 *
-	 * @param WC_Order $order
-	 * @param string $status
+	 * @param WC_Order $order  The order.
+	 * @param string   $status Order status.
 	 */
 	protected function handle_order_status( WC_Order $order, string $status ) {
-		if ($status !== 'ignore') {
+		if ( 'ignore' !== $status ) {
 			$order->update_status( $status );
 		}
 	}
@@ -442,12 +463,12 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	 */
 	private function coingate_order_statuses() {
 		return array(
-			'paid' => 'Paid',
+			'paid'       => 'Paid',
 			'confirming' => 'Confirming',
-			'invalid' => 'Invalid',
-			'expired' => 'Expired',
-			'canceled' => 'Canceled',
-			'refunded' => 'Refunded',
+			'invalid'    => 'Invalid',
+			'expired'    => 'Expired',
+			'canceled'   => 'Canceled',
+			'refunded'   => 'Refunded',
 		);
 	}
 
@@ -467,8 +488,8 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Check if order status is valid.
 	 *
-	 * @param WC_Order $order
-	 * @param $price
+	 * @param WC_Order $order The order.
+	 * @param mixed    $price Price.
 	 * @return bool
 	 */
 	private function is_order_paid_status_valid( WC_Order $order, $price ) {
@@ -478,15 +499,14 @@ class Coingate_Payment_Gateway extends WC_Payment_Gateway
 	/**
 	 * Check token match.
 	 *
-	 * @param WC_Order $order
-	 * @param string $token
+	 * @param WC_Order $order The order.
+	 * @param string   $token Token.
 	 * @return bool
 	 */
 	private function is_token_valid( WC_Order $order, string $token ) {
 		$order_token = $order->get_meta( static::ORDER_TOKEN_META_KEY );
 
-		return !empty( $order_token ) && $token === $order_token;
-
+		return ! empty( $order_token ) && $token === $order_token;
 	}
 
 }

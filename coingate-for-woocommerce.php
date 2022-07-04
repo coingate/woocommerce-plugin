@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -44,11 +43,6 @@ define( 'COINGATE_FOR_WOOCOMMERCE_VERSION', '2.0.0' );
 define( 'COINGATE_FOR_WOOCOMMERCE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Translations context.
- */
-define( 'COINGATE_TRANSLATIONS', 'coingate' );
-
-/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-coingate-for-woocommerce-activator.php
  */
@@ -83,7 +77,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-coingate-for-woocommerce.p
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since 1.0.0
  */
 function run_coingate_for_woocommerce() {
 

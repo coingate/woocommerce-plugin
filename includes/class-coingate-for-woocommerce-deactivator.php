@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin deactivation.
  *
@@ -25,7 +24,7 @@ class Coingate_For_Woocommerce_Deactivator {
 	/**
 	 * Delete plugin settings.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public static function deactivate() {
 		delete_option( 'woocommerce_coingate_settings' );
