@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="WooCommerce Payment Gateway - CoinGate">
+
+    <description>WooCommerce Payment Gateway - CoinGate</description>
+
+    <!-- Show progress and sniff codes in all reports -->
+    <arg value="ps"/>
+
+    <!-- Check all PHP files in directory tree by default. -->
+    <arg name="extensions" value="php"/>
+    <file>.</file>
+
+    <rule ref="WordPress">
+        <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
+        <exclude name="WordPress.Security.NonceVerification"/>
+        <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
+        <exclude name="WordPress.PHP.DevelopmentFunctions"/>
+    </rule>
+
+    <exclude-pattern>.github/*</exclude-pattern>
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>assets/*</exclude-pattern>
+    <exclude-pattern>index.php</exclude-pattern>
+
+</ruleset>
