@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+v2.0.1
+---
+* Added: WordPress coding standards.
+* Added: Github workflow.
+* Changed: Updated composer libraries.
+
 v2.0.0
 ---
 * **Plugin now requires Wordpress 5.3 version or greater.**
