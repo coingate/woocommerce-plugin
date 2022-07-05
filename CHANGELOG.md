@@ -6,6 +6,7 @@ v2.0.2
 * Added: WordPress coding standards.
 * Added: Github workflow.
 * Changed: Updated composer libraries.
+* Fixed: Not showing payment settings page [Issue #11]
 
 v2.0.1
 ---

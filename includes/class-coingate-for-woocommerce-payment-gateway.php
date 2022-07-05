@@ -379,7 +379,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 									$order_statuses = $cg_settings['order_statuses'];
 
 									foreach ( $wc_statuses as $wc_status_name => $wc_status_title ) {
-										$current_status = $order_statuses[ $cg_status_name ];
+										$current_status = isset( $order_statuses[ $cg_status_name ] ) ? $order_statuses[ $cg_status_name ] : null;
 
 										if ( empty( $current_status ) ) {
 											$current_status = $default_statuses[ $cg_status_name ];
