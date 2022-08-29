@@ -65,6 +65,6 @@
             "install-path": "../coingate/coingate-php"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

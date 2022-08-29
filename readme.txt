@@ -5,7 +5,7 @@ Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, monero, bit
 Requires at least: 5.3
 Requires PHP: 7.3
 Tested up to: 6.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 

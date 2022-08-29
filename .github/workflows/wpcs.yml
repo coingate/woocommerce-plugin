@@ -1,0 +1,19 @@
+name: Test
+
+on: pull_request
+
+jobs:
+  phpcs:
+    name: WordPress Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install PHP Dependencies
+        uses: "ramsey/composer-install@v2"
+      - name: Coding Standards
+        run: composer phpcs

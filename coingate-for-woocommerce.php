@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -16,7 +15,7 @@
  * Plugin Name:       WooCommerce Payment Gateway - CoinGate
  * Plugin URI:        https://coingate.com
  * Description:       Accept Bitcoin and 70+ Cryptocurrencies via CoinGate in your WooCommerce store.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            CoinGate
  * Author URI:        https://coingate.com
  * License:           MIT License
@@ -36,17 +35,12 @@ require_once 'vendor/autoload.php';
 /**
  * Currently plugin version.
  */
-define('COINGATE_FOR_WOOCOMMERCE_VERSION', '2.0.1');
+define( 'COINGATE_FOR_WOOCOMMERCE_VERSION', '2.0.2' );
 
 /**
  * Currently plugin URL.
  */
-define('COINGATE_FOR_WOOCOMMERCE_PLUGIN_URL', plugin_dir_url(__FILE__));
-
-/**
- * Translations context.
- */
-define('COINGATE_TRANSLATIONS', 'coingate');
+define( 'COINGATE_FOR_WOOCOMMERCE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.
@@ -83,7 +77,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-coingate-for-woocommerce.p
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since 1.0.0
  */
 function run_coingate_for_woocommerce() {
 
