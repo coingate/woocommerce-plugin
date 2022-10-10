@@ -5,7 +5,7 @@ Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, monero, bit
 Requires at least: 5.3
 Requires PHP: 7.3
 Tested up to: 6.0
-Stable tag: 2.0.2
+Stable tag: 2.1.0
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
@@ -79,7 +79,17 @@ At this point, you can also configure how CoinGate order statuses will correspon
 
 == Changelog ==
 
-= v2.0.0 - 2022-06-09 =
+= v2.1.0 - 2022-10-10 =
+* Added: Ability to send customer email to CoinGate's checkout form.
+* Fixed: Send app info from the API auth token validation action.
+
+= v2.0.2 - 2022-07-04 =
+* Added: WordPress coding standards.
+* Added: Github workflow.
+* Changed: Updated composer libraries.
+* Fixed: Not showing payment settings page [Issue #11]
+
+= v2.0.1 - 2022-06-09 =
 * Plugin now requires Wordpress 5.3 version or greater.
 * Plugin now requires PHP 7.3.0 or greater.
 * Updated CoinGate PHP library up to 4.1.0.
