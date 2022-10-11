@@ -139,6 +139,17 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			'order_statuses' => array(
 				'type' => 'order_statuses',
 			),
+			'purchaser_email_status' => array(
+				'title'       => __( 'Pre-fill CoinGate invoice email', 'coingate' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Pre-fill CoinGate invoice email', 'coingate' ),
+				'default'     => 'yes',
+				'description' => __(
+					'When this feature is enabled, customer email will be passed to CoinGate\'s checkout form automatically. <br>
+                    Email will be used to contact customers by the CoinGate team if any payment issues occur.',
+					'coingate'
+				),
+			),
 			'test' => array(
 				'title'       => __( 'Test (Sandbox)', 'coingate' ),
 				'type'        => 'checkbox',
@@ -177,6 +188,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 
 		if ( ! empty( $value ) ) {
 			$client = new Client();
+			$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
 			$result = $client::testConnection( $value, (bool) $mode );
 
 			if ( $result ) {
@@ -219,6 +231,10 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			'title'            => get_bloginfo( 'name', 'raw' ) . ' Order #' . $order->get_id(),
 			'description'      => implode( ', ', $description ),
 		);
+
+		if ( 'yes' === $this->get_option( 'purchaser_email_status' ) ) {
+			$params['purchaser_email'] = $order->get_billing_email();
+		}
 
 		$response = array( 'result' => 'fail' );
 

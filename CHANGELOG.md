@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+v2.1.0
+---
+* Added: Ability to send customer email to CoinGate's checkout form.
+* Fixed: Send app info from the API auth token validation action.
+
 v2.0.2
 ---
 * Added: WordPress coding standards.
