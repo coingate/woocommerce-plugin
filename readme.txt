@@ -1,4 +1,4 @@
-=== Accept Bitcoin and 70+ Cryptocurrencies with CoinGate ===
+=== WooCommerce Crypto Payment Processor ===
 Contributors: CoinGate
 Donate link: https://coingate.com
 Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, monero, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
@@ -11,7 +11,9 @@ License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
 == Description ==
 
-The easiest and quickest way to accept Bitcoin, Litecoin, Ethereum, Doge and other cryptocurrencies. Receive payouts in Bitcoin and other cryptocurrencies, Euros or U.S. Dollars without exchange rate volatility risk! Made by CoinGate.com
+Accept cryptocurrency payments in your store with the CoinGate module - a fully automated payment processing and invoicing solution for online stores.
+
+Receive payouts in Bitcoin and other cryptocurrencies, Euros, GBP and USD without exchange rate volatility risk!
 
 ***COINGATE CRYPTOCURRENCY PAYMENT GATEWAY FOR WOOCOMMERCE***
 
@@ -26,18 +28,24 @@ To find out more about the benefits of Cryptocurrencies for your business, as we
 
 = Features =
 
-* The gateway is fully automatic – set it and forget it.
-* Payment amount is calculated using real-time exchange rates.
-* Simplicity for you, flexibility for your customers. On our invoices, a customer can choose to pay with Bitcoin, Litecoin, Lightning Network, Ethereum and 70+ other cryptocurrencies at checkout, while your payouts are in a single currency of your choice - EUR/USD, BTC or other cryptocurrencies.
+* A simple, one-time setup with little-to-no maintenance needed;
+* Instant payment confirmations and order status updates;
+*  Pricing of merchandise in any local fiat currency;
+* Issuing full and partial refunds manually and automatically;
+* Permission-based account management tools;
+* Bitcoin Lightning Network support;
+* Payouts in stablecoins, BTC, other cryptos, or fiat currencies (EUR/GBP/USD);
+* Mitigation of cryptocurrency market volatility;
 * [Sandbox environment](https://sandbox.coingate.com/) for testing with Tesnet Bitcoin.
 * No setup or recurring fees.
 * No chargebacks – guaranteed!
 
 = Functionality =
 
-* Extend your invoice expiration time (if payouts are in BTC).
-* Accept slight underpayments automatically.
-* Refunds can be issued directly from the invoice – without involvement of the seller.
+* Extend invoice expiration time up to 24 hours (if pay and receive currency is the same);
+* Automatically accept slightly underpaid orders;
+* Change the invoice settings: disable/enable coins, switch positioning, settlements, & more;
+* Manage payout options for each accepted cryptocurrency.
 
 = How it works - example =
 
@@ -46,7 +54,7 @@ To find out more about the benefits of Cryptocurrencies for your business, as we
 3. An invoice is generated and, according to the current exchange rate, the price is 50,000 euro per bitcoin, so the customer has to pay 0.002 bitcoins.
 4. Once the invoice is paid, the merchant gets a notification and is credited 99 euro (100 euro minus our 1% flat fee), or 0.00198 BTC.
 
-To be able to use the plugin you have to create an account on https://coingate.com
+To be able to use the plugin you have to create an account on [https://coingate.com/accept](https://coingate.com/accept)
 
 == Installation ==
 
@@ -73,9 +81,9 @@ At this point, you can also configure how CoinGate order statuses will correspon
 
 == Screenshots ==
 
-1. CoinGate payment form - cryptocurrency selection window
-2. Some of the 70+ cryptocurrencies supported by CoinGate
-3. CoinGate Bitcoin Payment Page - Invoice
+1. CoinGate payment form - Cryptocurrency selection window
+2. CoinGate payment form - Invoice
+3. CoinGate payment form - Confirmation
 
 == Changelog ==
 
