@@ -50,7 +50,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		$this->description = $this->get_option( 'description' );
 		$this->api_secret = $this->get_option( 'api_secret' );
 		$this->api_auth_token = ( empty( $this->get_option( 'api_auth_token' ) ) ? $this->get_option( 'api_secret' ) : $this->get_option( 'api_auth_token' ) );
-		$this->receive_currency = $this->get_option( 'receive_currency' );
 		$this->order_statuses = $this->get_option( 'order_statuses' );
 		$this->test = ( 'yes' === $this->get_option( 'test', 'no' ) );
 
@@ -122,19 +121,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'CoinGate API Auth Token', 'coingate' ),
 				'default'     => ( empty( $this->get_option( 'api_secret' ) ) ? '' : $this->get_option( 'api_secret' ) ),
-			),
-			'receive_currency' => array(
-				'title' => __( 'Payout Currency', 'coingate' ),
-				'type' => 'select',
-				'options' => array(
-					'BTC'            => __( 'Bitcoin (฿)', 'coingate' ),
-					'USDT'           => __( 'USDT', 'coingate' ),
-					'EUR'            => __( 'Euros (€)', 'coingate' ),
-					'USD'            => __( 'U.S. Dollars ($)', 'coingate' ),
-					'DO_NOT_CONVERT' => __( 'Do not convert', 'coingate' ),
-				),
-				'description' => __( 'Choose the currency in which your payouts will be made (BTC, EUR or USD). For real-time EUR or USD settlements, you must verify as a merchant on CoinGate. Do not forget to add your Bitcoin address or bank details for payouts on <a href="https://coingate.com" target="_blank">your CoinGate account</a>.', 'coingate' ),
-				'default' => 'BTC',
 			),
 			'order_statuses' => array(
 				'type' => 'order_statuses',
@@ -224,7 +210,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			'order_id'         => $order->get_id(),
 			'price_amount'     => $order->get_total(),
 			'price_currency'   => $order->get_currency(),
-			'receive_currency' => $this->receive_currency,
 			'callback_url'     => trailingslashit( get_bloginfo( 'wpurl' ) ) . '?wc-api=wc_gateway_coingate',
 			'cancel_url'       => $this->get_cancel_order_url( $order ),
 			'success_url'      => add_query_arg( 'order-received', $order->get_id(), add_query_arg( 'key', $order->get_order_key(), $this->get_return_url( $order ) ) ),
