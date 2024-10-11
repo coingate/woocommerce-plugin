@@ -173,7 +173,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			$client = new Client();
 			$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
 			$post_data = $this->get_post_data();
-			$mode = isset($post_data['woocommerce_coingate_test']) ? (bool) $post_data['woocommerce_coingate_test'] : false;
+			$mode = isset( $post_data['woocommerce_coingate_test'] ) ? (bool) $post_data['woocommerce_coingate_test'] : false;
 			$result = $client::testConnection( $value, $mode );
 
 			if ( $result ) {
