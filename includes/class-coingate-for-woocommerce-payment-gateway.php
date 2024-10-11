@@ -35,6 +35,34 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	public const SETTINGS_KEY = 'woocommerce_coingate_settings';
 
 	/**
+	 * API auth token.
+	 *
+	 * @var string
+	 */
+	public $api_auth_token;
+
+	/**
+	 * List of order statuses.
+	 *
+	 * @var array
+	 */
+	public $order_statuses;
+
+	/**
+	 * TRUE, if TEST mode enabled, FALSE otherwise.
+	 *
+	 * @var bool
+	 */
+	public $test = false;
+
+	/**
+	 * API secret key.
+	 *
+	 * @var string
+	 */
+	public $api_secret;
+
+	/**
 	 * Coingate_Payment_Gateway constructor.
 	 */
 	public function __construct() {
