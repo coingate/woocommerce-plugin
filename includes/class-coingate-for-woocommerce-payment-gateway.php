@@ -169,13 +169,12 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return string Returns field value.
 	 */
 	public function validate_api_auth_token_field( $key, $value ) {
-		$post_data = $this->get_post_data();
-		$mode = $post_data['woocommerce_coingate_test'];
-
 		if ( ! empty( $value ) ) {
 			$client = new Client();
 			$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
-			$result = $client::testConnection( $value, (bool) $mode );
+			$post_data = $this->get_post_data();
+			$mode = isset($post_data['woocommerce_coingate_test']) ? (bool) $post_data['woocommerce_coingate_test'] : false;
+			$result = $client::testConnection( $value, $mode );
 
 			if ( $result ) {
 				return $value;
