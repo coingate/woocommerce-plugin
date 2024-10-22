@@ -121,13 +121,13 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Description', 'coingate' ),
 				'type'        => 'textarea',
 				'description' => __( 'The payment method description which a user sees at the checkout of your store.', 'coingate' ),
-				'default'     => __( 'Pay with BTC, LTC, ETH, XMR, XRP, BCH and other cryptocurrencies. Powered by CoinGate.', 'coingate' ),
+				'default'     => __( 'Pay with BTC, LTC, ETH, TRX, stablecoins and other cryptocurrencies.', 'coingate' ),
 			),
 			'title' => array(
 				'title'       => __( 'Title', 'coingate' ),
 				'type'        => 'text',
 				'description' => __( 'The payment method title which a customer sees at the checkout of your store.', 'coingate' ),
-				'default'     => __( 'Cryptocurrencies via CoinGate (more than 50 supported)', 'coingate' ),
+				'default'     => __( 'Cryptocurrencies via CoinGate', 'coingate' ),
 			),
 			'api_auth_token' => array(
 				'title'       => __( 'API Auth Token', 'coingate' ),

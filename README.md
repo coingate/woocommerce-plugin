@@ -63,7 +63,7 @@ For the testing mode to work, you must generate separate API credentials on [htt
 1. Login to your WordPress admin panel and go to Plugins > Add New.
 2. In the Search Plugins field, type in “coingate”. When the CoinGate for WooCommerce plugin is displayed, click “Install Now” (if asked, enter your FTP credentials).
 3. After the plugin is installed, click “Activate”.	
-4. Go to WooCommerce > Settings > Payments > Method : “CoinGate – Cryptocurrencies via CoinGate (more than 50 supported)” and then click the check box “Enabled”. After Enabled is clicked then press on CoinGate on the same page. If needed, change the Description and the Title according to your preferences.
+4. Go to WooCommerce > Settings > Payments > Method : “Cryptocurrencies via CoinGate” and then click the check box “Enabled”. After Enabled is clicked then press on CoinGate on the same page. If needed, change the Description and the Title according to your preferences.
 5. Enter your API credentials on the WooCommerce configuration page.
 6. Set the *Receive Currency* parameter to the currency in which you wish to receive your payouts from CoinGate. 
 At this point, you can also configure how CoinGate order statuses will correspond to WooCommerce order statuses. Leave the default options if you are not sure.
