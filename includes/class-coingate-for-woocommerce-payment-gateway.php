@@ -35,6 +35,34 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	public const SETTINGS_KEY = 'woocommerce_coingate_settings';
 
 	/**
+	 * API auth token.
+	 *
+	 * @var string
+	 */
+	public $api_auth_token;
+
+	/**
+	 * List of order statuses.
+	 *
+	 * @var array
+	 */
+	public $order_statuses;
+
+	/**
+	 * TRUE, if TEST mode enabled, FALSE otherwise.
+	 *
+	 * @var bool
+	 */
+	public $test = false;
+
+	/**
+	 * API secret key.
+	 *
+	 * @var string
+	 */
+	public $api_secret;
+
+	/**
 	 * Coingate_Payment_Gateway constructor.
 	 */
 	public function __construct() {
@@ -50,7 +78,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		$this->description = $this->get_option( 'description' );
 		$this->api_secret = $this->get_option( 'api_secret' );
 		$this->api_auth_token = ( empty( $this->get_option( 'api_auth_token' ) ) ? $this->get_option( 'api_secret' ) : $this->get_option( 'api_auth_token' ) );
-		$this->receive_currency = $this->get_option( 'receive_currency' );
 		$this->order_statuses = $this->get_option( 'order_statuses' );
 		$this->test = ( 'yes' === $this->get_option( 'test', 'no' ) );
 
@@ -70,21 +97,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			esc_html_e( 'CoinGate', 'coingate' );
 			?>
 		</h3>
-		<p>
-			<?php
-			esc_html_e(
-				'Accept Bitcoin through the CoinGate.com and receive payments in euros and US dollars.',
-				'coingate'
-			);
-			?>
-			<br>
-			<a href="https://developer.coingate.com/docs/issues" target="_blank">
-			<?php
-			esc_html_e( 'Not working? Common issues' );
-			?>
-			</a> &middot;
-			<a href="mailto:support@coingate.com">support@coingate.com</a>
-		</p>
 		<table class="form-table">
 			<?php
 				$this->generate_settings_html();
@@ -109,32 +121,19 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Description', 'coingate' ),
 				'type'        => 'textarea',
 				'description' => __( 'The payment method description which a user sees at the checkout of your store.', 'coingate' ),
-				'default'     => __( 'Pay with BTC, LTC, ETH, XMR, XRP, BCH and other cryptocurrencies. Powered by CoinGate.', 'coingate' ),
+				'default'     => __( 'Pay with BTC, LTC, ETH, TRX, stablecoins and other cryptocurrencies.', 'coingate' ),
 			),
 			'title' => array(
 				'title'       => __( 'Title', 'coingate' ),
 				'type'        => 'text',
 				'description' => __( 'The payment method title which a customer sees at the checkout of your store.', 'coingate' ),
-				'default'     => __( 'Cryptocurrencies via CoinGate (more than 50 supported)', 'coingate' ),
+				'default'     => __( 'Cryptocurrencies via CoinGate', 'coingate' ),
 			),
 			'api_auth_token' => array(
 				'title'       => __( 'API Auth Token', 'coingate' ),
 				'type'        => 'text',
 				'description' => __( 'CoinGate API Auth Token', 'coingate' ),
 				'default'     => ( empty( $this->get_option( 'api_secret' ) ) ? '' : $this->get_option( 'api_secret' ) ),
-			),
-			'receive_currency' => array(
-				'title' => __( 'Payout Currency', 'coingate' ),
-				'type' => 'select',
-				'options' => array(
-					'BTC'            => __( 'Bitcoin (฿)', 'coingate' ),
-					'USDT'           => __( 'USDT', 'coingate' ),
-					'EUR'            => __( 'Euros (€)', 'coingate' ),
-					'USD'            => __( 'U.S. Dollars ($)', 'coingate' ),
-					'DO_NOT_CONVERT' => __( 'Do not convert', 'coingate' ),
-				),
-				'description' => __( 'Choose the currency in which your payouts will be made (BTC, EUR or USD). For real-time EUR or USD settlements, you must verify as a merchant on CoinGate. Do not forget to add your Bitcoin address or bank details for payouts on <a href="https://coingate.com" target="_blank">your CoinGate account</a>.', 'coingate' ),
-				'default' => 'BTC',
 			),
 			'order_statuses' => array(
 				'type' => 'order_statuses',
@@ -183,13 +182,12 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return string Returns field value.
 	 */
 	public function validate_api_auth_token_field( $key, $value ) {
-		$post_data = $this->get_post_data();
-		$mode = $post_data['woocommerce_coingate_test'];
-
 		if ( ! empty( $value ) ) {
 			$client = new Client();
 			$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
-			$result = $client::testConnection( $value, (bool) $mode );
+			$post_data = $this->get_post_data();
+			$mode = isset( $post_data['woocommerce_coingate_test'] ) ? (bool) $post_data['woocommerce_coingate_test'] : false;
+			$result = $client::testConnection( $value, $mode );
 
 			if ( $result ) {
 				return $value;
@@ -224,7 +222,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			'order_id'         => $order->get_id(),
 			'price_amount'     => $order->get_total(),
 			'price_currency'   => $order->get_currency(),
-			'receive_currency' => $this->receive_currency,
 			'callback_url'     => trailingslashit( get_bloginfo( 'wpurl' ) ) . '?wc-api=wc_gateway_coingate',
 			'cancel_url'       => $this->get_cancel_order_url( $order ),
 			'success_url'      => add_query_arg( 'order-received', $order->get_id(), add_query_arg( 'key', $order->get_order_key(), $this->get_return_url( $order ) ) ),
@@ -261,7 +258,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		$request = $_POST;
 		$order = wc_get_order( sanitize_text_field( $request['order_id'] ) );
 
-		if ( ! $this->is_token_valid( $order, sanitize_text_field( $request['token'] ) ) ) {
+		if ( ! $this->is_token_valid( $order, preg_replace( '/\s+/', '', $request['token'] ) ) ) {
 			throw new Exception( 'CoinGate callback token does not match' );
 		}
 
@@ -530,7 +527,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	private function is_token_valid( WC_Order $order, string $token ) {
 		$order_token = $order->get_meta( static::ORDER_TOKEN_META_KEY );
 
-		return ! empty( $order_token ) && $token === $order_token;
+		return ! empty( $order_token ) && hash_equals( $order_token, $token );
 	}
 
 }

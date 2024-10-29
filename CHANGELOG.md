@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+v2.2.0
+---
+* Deprecated: Currency element.
+* PHP Deprecated: Creation of dynamic properties.  
+* Fixed: token validation on a callback.
+* Fixed: Undefined array key "woocommerce_coingate_test".
+
 v2.1.1
 ---
 * Updates readme
