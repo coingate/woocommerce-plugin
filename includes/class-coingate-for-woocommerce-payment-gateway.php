@@ -253,7 +253,8 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			$gateway_order = $client->order->create( $params );
 			if ( $gateway_order ) {
-				update_post_meta( $order->get_id(), static::ORDER_TOKEN_META_KEY, $gateway_order->token );
+				$order->add_meta_data( static::ORDER_TOKEN_META_KEY, $gateway_order->token, true );
+				$order->save();
 				$response['result'] = 'success';
 				$response['redirect'] = $gateway_order->payment_url;
 			}
