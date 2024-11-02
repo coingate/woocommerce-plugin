@@ -58,14 +58,26 @@ The installation of our WooCommerce payment module is quite easy. In order to en
 
 For the testing mode to work, you must generate separate API credentials on [https://sandbox.coingate.com](https://sandbox.coingate.com), since API credentials generated on [https://coingate.com](https://coingate.com) will not work in the sandbox environment. To create a set of API credentials, log in to your CoinGate account, and either complete the auto-setup wizard, or find the API tab on the menu – click “Apps”, and then click “+New App”.
 
-*Please note, this guide was created using WordPress 4.7.4, but is also useful for installing older or upcoming versions.*
-
 1. Login to your WordPress admin panel and go to Plugins > Add New.
 2. In the Search Plugins field, type in “coingate”. When the CoinGate for WooCommerce plugin is displayed, click “Install Now” (if asked, enter your FTP credentials).
 3. After the plugin is installed, click “Activate”.	
-4. Go to WooCommerce > Settings > Payments > Method : “CoinGate – Cryptocurrencies via CoinGate (more than 50 supported)” and then click the check box “Enabled”. After Enabled is clicked then press on CoinGate on the same page. If needed, change the Description and the Title according to your preferences.
+4. Go to WooCommerce > Settings > Payments > Method : “Cryptocurrencies via CoinGate” and then click the check box “Enabled”. After Enabled is clicked then press on CoinGate on the same page. If needed, change the Description and the Title according to your preferences.
 5. Enter your API credentials on the WooCommerce configuration page.
 6. Set the *Receive Currency* parameter to the currency in which you wish to receive your payouts from CoinGate. 
 At this point, you can also configure how CoinGate order statuses will correspond to WooCommerce order statuses. Leave the default options if you are not sure.
 7. If you are using Sandbox API credentials, then turn Test Mode on.
 8. Finally, click “Save changes”, and you are good to go!
+  
+**Important Change**
+
+Since plugin version 2.2.0, the “Receive currency” field has been deprecated and removed from the plugin settings. Therefore, settlement must be configured on the CoinGate platform.
+
+1.	In the API App settings, set the “Settlement Setting” value to “Custom settings (advanced)”:
+ 
+<img width="972" alt="image" src="https://github.com/user-attachments/assets/3f160ae4-408b-45a9-8efb-e7cd4bded30f">
+
+2.	Edit the API App, select the “Currency settings” tab, and configure your desired receive currency:
+
+![image](https://github.com/user-attachments/assets/83e66cb9-824f-4e67-be7e-bb423cac6610)
+
+
