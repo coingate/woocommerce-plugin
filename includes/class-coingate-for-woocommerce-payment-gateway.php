@@ -131,8 +131,8 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			),
 			'api_auth_token' => array(
 				'title'       => __( 'API Auth Token', 'coingate' ),
-				'type'        => 'text',
-				'description' => __( 'CoinGate API Auth Token', 'coingate' ),
+				'type'        => 'password',
+				'description' => __( '<a href="https://support.coingate.com/hc/en-us/articles/4402498918546" target="_blank">How to create API token</a>', 'coingate' ),
 				'default'     => ( empty( $this->get_option( 'api_secret' ) ) ? '' : $this->get_option( 'api_secret' ) ),
 			),
 			'order_statuses' => array(
