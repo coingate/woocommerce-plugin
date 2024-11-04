@@ -1,12 +1,4 @@
-# Accept Bitcoin and 70+ Cryptocurrencies with CoinGate
-Contributors: CoinGate
-Donate link: https://coingate.com
-Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, monero, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
-Requires at least: 5.3
-Tested up to: 6.6
-Stable tag: trunk
-License: MIT
-License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
+# Accept BTC, LTC, ETH, TRX, stablecoins and other cryptocurrencies
 
 ## Description
 
@@ -28,7 +20,7 @@ To find out more about the benefits of Cryptocurrencies for your business, as we
 * The gateway is fully automatic – set it and forget it.
 * Payment amount is calculated using real-time exchange rates.
 * Simplicity for you, flexibility for your customers. On our invoices, a customer can choose to pay with Bitcoin, Litecoin, Lightning Network, Ethereum and 70+ other cryptocurrencies at checkout, while your payouts are in a single currency of your choice - EUR/USD, BTC or other cryptocurrencies.
-* [Sandbox environment](https://sandbox.coingate.com/) for testing with Tesnet Bitcoin.
+* [Sandbox environment](https://sandbox.coingate.com/) for testing with Testnet Bitcoin.
 * No setup or recurring fees.
 * No chargebacks – guaranteed!
 
@@ -68,8 +60,7 @@ At this point, you can also configure how CoinGate order statuses will correspon
 7. If you are using Sandbox API credentials, then turn Test Mode on.
 8. Finally, click “Save changes”, and you are good to go!
   
-**Important Change**
-
+### ⚠️ Important Change
 Since plugin version 2.2.0, the “Receive currency” field has been deprecated and removed from the plugin settings. Therefore, settlement must be configured on the CoinGate platform.
 
 1.	In the API App settings, set the “Settlement Setting” value to “Custom settings (advanced)”:

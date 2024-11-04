@@ -1,7 +1,7 @@
 === WooCommerce Crypto Payment Processor ===
 Contributors: CoinGate
 Donate link: https://coingate.com
-Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, monero, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
+Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
 Requires at least: 5.3
 Requires PHP: 7.3
 Tested up to: 6.6
