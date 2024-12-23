@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@wordpress/scripts": "^30.4.0"
+  },
+  "name": "custom-payment-gateways-woocommerce",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  }
+}
