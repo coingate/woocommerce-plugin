@@ -12,10 +12,10 @@
 
     <rule ref="WordPress">
         <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
-<!--        <exclude name="WordPress.Security.NonceVerification"/>-->
+        <exclude name="WordPress.Security.NonceVerification"/>
         <exclude name="WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion" />
         <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
-<!--        <exclude name="WordPress.PHP.DevelopmentFunctions"/>-->
+        <exclude name="WordPress.PHP.DevelopmentFunctions"/>
         <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
 
     </rule>
