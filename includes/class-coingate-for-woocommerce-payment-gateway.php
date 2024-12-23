@@ -121,7 +121,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Description', 'coingate' ),
 				'type'        => 'textarea',
 				'description' => __( 'The payment method description which a user sees at the checkout of your store.', 'coingate' ),
-				'default'     => __( 'Pay with BTC, LTC, ETH, TRX, stablecoins and other cryptocurrencies.', 'coingate' ),
+				'default'     => __( 'Pay with Bitcoin, stablecoins and other cryptocurrencies', 'coingate' ),
 			),
 			'title' => array(
 				'title'       => __( 'Title', 'coingate' ),

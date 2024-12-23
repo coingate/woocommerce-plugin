@@ -162,6 +162,10 @@ class Coingate_For_Woocommerce {
 		$plugin_public = new Coingate_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_filter( 'woocommerce_payment_gateways', $plugin_public, 'register_payment_gateway' );
+
+        $this->loader->add_action('before_woocommerce_init', $plugin_public, 'declare_cart_checkout_blocks_compatibility');
+
+        $this->loader->add_action( 'woocommerce_blocks_loaded', $plugin_public, 'woocommerce_gateway_coingate_block_support');
 	}
 
 	/**
