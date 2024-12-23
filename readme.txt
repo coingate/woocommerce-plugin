@@ -87,7 +87,7 @@ At this point, you can also configure how CoinGate order statuses will correspon
 
 == Changelog ==
 
-= v2.3.0 - 2025-01-11 =
+= v2.3.0 - 2025-01-01 =
 * Added: Support for Block-Based Checkout.
 
 = v2.2.0 - 2024-10-15 =
