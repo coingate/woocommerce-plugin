@@ -24,7 +24,7 @@ final class Coingate_For_Woocommerce_Blocks_Support extends AbstractPaymentMetho
 				'wp-element',
 				'wp-html-entities',
 			),
-			null, // or time() or filemtime( ... ) to skip caching
+			null,
 			true
 		);
 

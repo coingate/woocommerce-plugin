@@ -87,15 +87,4 @@ class Coingate_For_Woocommerce_Public
             }
         );
     }
-
-    public function declare_cart_checkout_blocks_compatibility()
-    {
-        if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
-            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-                'cart_checkout_blocks',
-                __FILE__,
-                false // true (compatible, default) or false (not compatible)
-            );
-        }
-    }
 }
