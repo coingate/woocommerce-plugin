@@ -4,8 +4,8 @@ Donate link: https://coingate.com
 Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
 Requires at least: 5.3
 Requires PHP: 7.3
-Tested up to: 6.6
-Stable tag: 2.2.0
+Tested up to: 6.7
+Stable tag: 2.3.0
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
@@ -86,6 +86,15 @@ At this point, you can also configure how CoinGate order statuses will correspon
 3. CoinGate payment form - Confirmation
 
 == Changelog ==
+
+= v2.3.0 - 2025-01-11 =
+* Added: Support for Block-Based Checkout.
+
+= v2.2.0 - 2024-10-15 =
+* Deprecated: Currency element.
+* PHP Deprecated: Creation of dynamic properties.
+* Fixed: token validation on a callback.
+* Fixed: Undefined array key "woocommerce_coingate_test".
 
 = v2.1.0 - 2022-10-10 =
 * Added: Ability to send customer email to CoinGate's checkout form.

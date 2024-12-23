@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+
+v2.3.0
+---
+* Added: Support for Block-Based Checkout.
+
+
 v2.2.0
 ---
 * Deprecated: Currency element.
