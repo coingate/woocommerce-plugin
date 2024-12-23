@@ -19,72 +19,69 @@
  * @subpackage Coingate_For_Woocommerce/public
  * @author     CoinGate <support@coingate.com>
  */
-class Coingate_For_Woocommerce_Public
-{
+class Coingate_For_Woocommerce_Public {
 
-    /**
-     * The ID of this plugin.
-     *
-     * @since  1.0.0
-     * @access private
-     * @var    string $plugin_name The ID of this plugin.
-     */
-    private $plugin_name;
+	/**
+	 * The ID of this plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $plugin_name The ID of this plugin.
+	 */
+	private $plugin_name;
 
-    /**
-     * The version of this plugin.
-     *
-     * @since  1.0.0
-     * @access private
-     * @var    string $version The current version of this plugin.
-     */
-    private $version;
+	/**
+	 * The version of this plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $version The current version of this plugin.
+	 */
+	private $version;
 
-    /**
-     * Initialize the class and set its properties.
-     *
-     * @param string $plugin_name The name of the plugin.
-     * @param string $version The version of this plugin.
-     * @since 1.0.0
-     */
-    public function __construct($plugin_name, $version)
-    {
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @param string $plugin_name The name of the plugin.
+	 * @param string $version The version of this plugin.
+	 *
+	 * @since 1.0.0
+	 */
+	public function __construct( $plugin_name, $version ) {
 
-        $this->plugin_name = $plugin_name;
-        $this->version = $version;
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
 
-    }
+	}
 
-    /**
-     * Register payment gateway.
-     *
-     * @param array $methods Payment gateway methods.
-     * @return array
-     */
-    public function register_payment_gateway(array $methods)
-    {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-coingate-for-woocommerce-payment-gateway.php';
+	/**
+	 * Register payment gateway.
+	 *
+	 * @param array $methods Payment gateway methods.
+	 *
+	 * @return array
+	 */
+	public function register_payment_gateway( array $methods ) {
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-coingate-for-woocommerce-payment-gateway.php';
 
-        if (!isset($methods['Coingate_Payment_Gateway'])) {
-            $methods['Coingate_Payment_Gateway'] = new Coingate_For_Woocommerce_Payment_Gateway();
-        }
+		if ( ! isset( $methods['Coingate_Payment_Gateway'] ) ) {
+			$methods['Coingate_Payment_Gateway'] = new Coingate_For_Woocommerce_Payment_Gateway();
+		}
 
-        return $methods;
-    }
+		return $methods;
+	}
 
-    /**
-     * Enable Block support
-     *
-     */
-    public function woocommerce_gateway_coingate_block_support()
-    {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-coingate-for-woocommerce-blocks-support.php';
+	/**
+	 * Enable Block support
+	 */
+	public function woocommerce_gateway_coingate_block_support() {
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-coingate-for-woocommerce-blocks-support.php';
 
-        add_action(
-            'woocommerce_blocks_payment_method_type_registration',
-            function (\Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
-                $payment_method_registry->register(new Coingate_For_Woocommerce_Blocks_Support);
-            }
-        );
-    }
+		add_action(
+			'woocommerce_blocks_payment_method_type_registration',
+			function ( \Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
+				$payment_method_registry->register( new Coingate_For_Woocommerce_Blocks_Support() );
+			}
+		);
+	}
 }
