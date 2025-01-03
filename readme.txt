@@ -4,7 +4,7 @@ Donate link: https://coingate.com
 Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
 Requires at least: 5.3
 Requires PHP: 7.3
-Tested up to: 6.7
+Tested up to: 6.7.1
 Stable tag: 2.3.0
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
