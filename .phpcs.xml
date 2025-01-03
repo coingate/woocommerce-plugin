@@ -13,13 +13,17 @@
     <rule ref="WordPress">
         <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
         <exclude name="WordPress.Security.NonceVerification"/>
+        <exclude name="WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion" />
         <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
         <exclude name="WordPress.PHP.DevelopmentFunctions"/>
+        <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
+
     </rule>
 
     <exclude-pattern>.github/*</exclude-pattern>
     <exclude-pattern>vendor/*</exclude-pattern>
     <exclude-pattern>assets/*</exclude-pattern>
     <exclude-pattern>index.php</exclude-pattern>
+    <exclude-pattern>*.asset.php</exclude-pattern>
 
 </ruleset>

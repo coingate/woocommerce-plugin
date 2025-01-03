@@ -31,7 +31,7 @@ class Coingate_For_Woocommerce {
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    Coingate_For_Woocommerce_Loader $loader    Maintains and registers all hooks for the plugin.
+	 * @var    Coingate_For_Woocommerce_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -162,6 +162,8 @@ class Coingate_For_Woocommerce {
 		$plugin_public = new Coingate_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_filter( 'woocommerce_payment_gateways', $plugin_public, 'register_payment_gateway' );
+
+		$this->loader->add_action( 'woocommerce_blocks_loaded', $plugin_public, 'woocommerce_gateway_coingate_block_support' );
 	}
 
 	/**
@@ -177,8 +179,8 @@ class Coingate_For_Woocommerce {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since  1.0.0
 	 * @return string The name of the plugin.
+	 * @since  1.0.0
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
@@ -187,8 +189,8 @@ class Coingate_For_Woocommerce {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since  1.0.0
 	 * @return Coingate_For_Woocommerce_Loader Orchestrates the hooks of the plugin.
+	 * @since  1.0.0
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -197,8 +199,8 @@ class Coingate_For_Woocommerce {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since  1.0.0
 	 * @return string The version number of the plugin.
+	 * @since  1.0.0
 	 */
 	public function get_version() {
 		return $this->version;
