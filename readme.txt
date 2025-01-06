@@ -19,7 +19,7 @@ Receive payouts in Euros, stablecoins and other cryptocurrencies without exchang
 
 Start accepting Bitcoin and other cryptocurrencies in no time! Our official WooCommerce module connects your store to our ***fully automated cryptocurrency processing platform and invoice system***, giving you access to the rapidly emerging blockchain market.
 
-With CoinGate, online businesses can ***accept Bitcoin, Litecoin, Ethereum, Doge*** as well as 70+ other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to Fiat, and you can receive ***payouts in Euros and U.S. Dollars*** directly to your bank account. Alternatively, store owners can choose to receive ***payouts in Bitcoin*** and other cryptocurrencies such as ***Ethereum, Ripple*** and more!
+With CoinGate, online businesses can ***accept Bitcoin, Litecoin, Ethereum, Doge, USDT, USDC*** as well as 70+ other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to EUR, allowing you to receive payouts in Euros directly in your bank account. Alternatively, store owners can choose to receive ***payouts in Bitcoin*** and other cryptocurrencies such as ***Ethereum, USDC*** and more!
 
 ***START ACCEPTING BITCOIN IN MINUTES!***
 
