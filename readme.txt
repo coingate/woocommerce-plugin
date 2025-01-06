@@ -13,7 +13,7 @@ License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
 Accept cryptocurrency payments in your store with the CoinGate module - a fully automated payment processing and invoicing solution for online stores.
 
-Receive payouts in Bitcoin and other cryptocurrencies, Euros, GBP and USD without exchange rate volatility risk!
+Receive payouts in Euros, stablecoins and other cryptocurrencies without exchange rate volatility risk!
 
 ***COINGATE CRYPTOCURRENCY PAYMENT GATEWAY FOR WOOCOMMERCE***
 
@@ -30,19 +30,18 @@ To find out more about the benefits of Cryptocurrencies for your business, as we
 
 * A simple, one-time setup with little-to-no maintenance needed;
 * Instant payment confirmations and order status updates;
-*  Pricing of merchandise in any local fiat currency;
-* Issuing full and partial refunds manually and automatically;
+* Pricing of merchandise in any local fiat currency;
+* [Issuing full and partial refunds](https://coingate.com/blog/post/merchant-refund);
 * Permission-based account management tools;
 * Bitcoin Lightning Network support;
-* Payouts in stablecoins, BTC, other cryptos, or fiat currencies (EUR/GBP/USD);
+* Payouts in stablecoins, BTC, other cryptos or EUR;
 * Mitigation of cryptocurrency market volatility;
-* [Sandbox environment](https://sandbox.coingate.com/) for testing with Tesnet Bitcoin.
+* [Sandbox environment](https://sandbox.coingate.com/) for testing with Testnet Bitcoin.
 * No setup or recurring fees.
 * No chargebacks – guaranteed!
 
 = Functionality =
 
-* Extend invoice expiration time up to 24 hours (if pay and receive currency is the same);
 * Automatically accept slightly underpaid orders;
 * Change the invoice settings: disable/enable coins, switch positioning, settlements, & more;
 * Manage payout options for each accepted cryptocurrency.
