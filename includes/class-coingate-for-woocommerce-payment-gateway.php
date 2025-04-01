@@ -288,10 +288,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 
 		switch ( $callback_order_status ) {
 			case 'paid':
-				if ( ! $this->is_order_paid_status_valid( $order, $cg_order->price_amount ) ) {
-					throw new Exception( 'CoinGate Order #' . $order->get_id() . ' amounts do not match' );
-				}
-
 				$status_was = 'wc-' . $order->get_status();
 
 				$this->handle_order_status( $order, $wc_order_status );
@@ -505,17 +501,6 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
 
 		return $client;
-	}
-
-	/**
-	 * Check if order status is valid.
-	 *
-	 * @param WC_Order $order The order.
-	 * @param mixed    $price Price.
-	 * @return bool
-	 */
-	private function is_order_paid_status_valid( WC_Order $order, $price ) {
-		return $order->get_total() >= (float) $price;
 	}
 
 	/**
