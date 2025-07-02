@@ -9,6 +9,11 @@
  * @subpackage Coingate_For_Woocommerce/includes
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Fired during plugin deactivation.
  *
@@ -25,9 +30,17 @@ class Coingate_For_Woocommerce_Deactivator {
 	 * Delete plugin settings.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
-	public static function deactivate() {
+	public static function deactivate(): void {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+
 		delete_option( 'woocommerce_coingate_settings' );
+		
+		// Clear any existing caches
+		wp_cache_flush();
 	}
 
 }

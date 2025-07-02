@@ -9,6 +9,11 @@
  * @subpackage Coingate_For_Woocommerce/includes
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Define the internationalization functionality.
  *
@@ -26,16 +31,26 @@ class Coingate_For_Woocommerce_I18n {
 	 * Load the plugin text domain for translation.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
-	public function load_plugin_textdomain() {
+	public function load_plugin_textdomain(): void {
+		$domain = 'coingate-for-woocommerce';
+		$locale = determine_locale();
+		
 		load_plugin_textdomain(
-			'coingate-for-woocommerce',
+			$domain,
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
 
+		// Load WooCommerce specific translations
+		if ( class_exists( 'WooCommerce' ) ) {
+			load_plugin_textdomain(
+				$domain,
+				false,
+				dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/woocommerce/'
+			);
+		}
 	}
-
-
 
 }

@@ -39,28 +39,28 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @var string
 	 */
-	public $api_auth_token;
+	public string $api_auth_token;
 
 	/**
 	 * List of order statuses.
 	 *
 	 * @var array
 	 */
-	public $order_statuses;
+	public array $order_statuses;
 
 	/**
 	 * TRUE, if TEST mode enabled, FALSE otherwise.
 	 *
 	 * @var bool
 	 */
-	public $test = false;
+	public bool $test = false;
 
 	/**
 	 * API secret key.
 	 *
 	 * @var string
 	 */
-	public $api_secret;
+	public string $api_secret;
 
 	/**
 	 * Coingate_Payment_Gateway constructor.
@@ -203,11 +203,11 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * Payment process.
 	 *
 	 * @param int $order_id The order ID.
-	 * @return string[]
+	 * @return array
 	 *
 	 * @throws Exception Unknown exception type.
 	 */
-	public function process_payment( $order_id ) {
+	public function process_payment( int $order_id ): array {
 		global $woocommerce, $page, $paged;
 		$order = wc_get_order( $order_id );
 
@@ -255,16 +255,21 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @throws Exception Unknown exception type.
 	 */
-	public function payment_callback() {
-		$request = $_POST;
-		$order = wc_get_order( sanitize_text_field( $request['order_id'] ) );
+	public function payment_callback(): void {
+		$request = array_map( 'sanitize_text_field', wp_unslash( $_POST ) );
+		
+		if ( ! isset( $request['order_id'], $request['token'], $request['id'] ) ) {
+			throw new Exception( 'Invalid callback data received' );
+		}
+
+		$order = wc_get_order( $request['order_id'] );
 
 		if ( ! $this->is_token_valid( $order, preg_replace( '/\s+/', '', $request['token'] ) ) ) {
 			throw new Exception( 'CoinGate callback token does not match' );
 		}
 
 		if ( ! $order || ! $order->get_id() ) {
-			throw new Exception( 'Order #' . $order->get_id() . ' does not exists' );
+			throw new Exception( 'Order #' . $request['order_id'] . ' does not exists' );
 		}
 
 		if ( $order->get_payment_method() !== $this->id ) {
@@ -273,7 +278,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 
 		// Get payment data from request due to security reason.
 		$client = $this->init_coingate();
-		$cg_order = $client->order->get( (int) sanitize_key( $request['id'] ) );
+		$cg_order = $client->order->get( (int) $request['id'] );
 		if ( ! $cg_order || $order->get_id() !== (int) $cg_order->order_id ) {
 			throw new Exception( 'CoinGate Order #' . $order->get_id() . ' does not exists.' );
 		}
@@ -334,7 +339,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param string   $redirect Redirect URL.
 	 * @return string
 	 */
-	public function get_cancel_order_url( $order, $redirect = '' ) {
+	public function get_cancel_order_url( WC_Order $order, string $redirect = '' ): string {
 		return apply_filters(
 			'woocommerce_get_cancel_order_url',
 			wp_nonce_url(
@@ -354,9 +359,9 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Generate order statuses.
 	 *
-	 * @return false|string
+	 * @return string|false
 	 */
-	public function generate_order_statuses_html() {
+	public function generate_order_statuses_html(): string|false {
 		ob_start();
 
 		$cg_statuses = $this->coingate_order_statuses();
@@ -419,9 +424,9 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Validate order statuses field.
 	 *
-	 * @return mixed|string
+	 * @return array|string
 	 */
-	public function validate_order_statuses_field() {
+	public function validate_order_statuses_field(): array|string {
 		$order_statuses = $this->get_option( 'order_statuses' );
 
 		if ( isset( $_POST[ $this->plugin_id . $this->id . '_order_statuses' ] ) ) {
@@ -437,7 +442,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Save order statuses.
 	 */
-	public function save_order_statuses() {
+	public function save_order_statuses(): void {
 		$coingate_order_statuses = $this->coingate_order_statuses();
 		$wc_statuses = wc_get_order_statuses();
 
@@ -468,7 +473,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param WC_Order $order  The order.
 	 * @param string   $status Order status.
 	 */
-	protected function handle_order_status( WC_Order $order, string $status ) {
+	protected function handle_order_status( WC_Order $order, string $status ): void {
 		if ( 'ignore' !== $status ) {
 			$order->update_status( $status );
 		}
@@ -477,9 +482,9 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * List of coingate order statuses.
 	 *
-	 * @return string[]
+	 * @return array<string, string>
 	 */
-	private function coingate_order_statuses() {
+	private function coingate_order_statuses(): array {
 		return array(
 			'paid'       => 'Paid',
 			'confirming' => 'Confirming',
@@ -494,13 +499,23 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * Initial client.
 	 *
 	 * @return Client
+	 * @throws Exception If client initialization fails.
 	 */
-	private function init_coingate() {
-		$auth_token = ( empty( $this->api_auth_token ) ? $this->api_secret : $this->api_auth_token );
-		$client = new Client( $auth_token, $this->test );
-		$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
+	private function init_coingate(): Client {
+		try {
+			$auth_token = ( empty( $this->api_auth_token ) ? $this->api_secret : $this->api_auth_token );
+			if ( empty( $auth_token ) ) {
+				throw new Exception( __( 'API credentials are not configured.', 'coingate' ) );
+			}
+			
+			$client = new Client( $auth_token, $this->test );
+			$client::setAppInfo( 'Coingate For Woocommerce', COINGATE_FOR_WOOCOMMERCE_VERSION );
 
-		return $client;
+			return $client;
+		} catch ( Exception $e ) {
+			error_log( 'CoinGate client initialization failed: ' . $e->getMessage() );
+			throw $e;
+		}
 	}
 
 	/**
@@ -510,7 +525,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param string   $token Token.
 	 * @return bool
 	 */
-	private function is_token_valid( WC_Order $order, string $token ) {
+	private function is_token_valid( WC_Order $order, string $token ): bool {
 		$order_token = $order->get_meta( static::ORDER_TOKEN_META_KEY );
 
 		return ! empty( $order_token ) && hash_equals( $order_token, $token );

@@ -9,6 +9,11 @@
  * @subpackage Coingate_For_Woocommerce/includes
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * The core plugin class.
  *
@@ -33,7 +38,7 @@ class Coingate_For_Woocommerce {
 	 * @access protected
 	 * @var    Coingate_For_Woocommerce_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
-	protected $loader;
+	protected Coingate_For_Woocommerce_Loader $loader;
 
 	/**
 	 * The unique identifier of this plugin.
@@ -42,7 +47,7 @@ class Coingate_For_Woocommerce {
 	 * @access protected
 	 * @var    string $plugin_name The string used to uniquely identify this plugin.
 	 */
-	protected $plugin_name;
+	protected string $plugin_name;
 
 	/**
 	 * The current version of the plugin.
@@ -51,7 +56,7 @@ class Coingate_For_Woocommerce {
 	 * @access protected
 	 * @var    string $version The current version of the plugin.
 	 */
-	protected $version;
+	protected string $version;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -92,8 +97,9 @@ class Coingate_For_Woocommerce {
 	 *
 	 * @since  1.0.0
 	 * @access private
+	 * @return void
 	 */
-	private function load_dependencies() {
+	private function load_dependencies(): void {
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -130,8 +136,9 @@ class Coingate_For_Woocommerce {
 	 *
 	 * @since  1.0.0
 	 * @access private
+	 * @return void
 	 */
-	private function set_locale() {
+	private function set_locale(): void {
 		$plugin_i18n = new Coingate_For_Woocommerce_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
@@ -144,8 +151,9 @@ class Coingate_For_Woocommerce {
 	 *
 	 * @since  1.0.0
 	 * @access private
+	 * @return void
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks(): void {
 		$plugin_admin = new Coingate_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'load_plugin' );
@@ -157,8 +165,9 @@ class Coingate_For_Woocommerce {
 	 *
 	 * @since  1.0.0
 	 * @access private
+	 * @return void
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks(): void {
 		$plugin_public = new Coingate_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_filter( 'woocommerce_payment_gateways', $plugin_public, 'register_payment_gateway' );
@@ -170,8 +179,9 @@ class Coingate_For_Woocommerce {
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
-	public function run() {
+	public function run(): void {
 		$this->loader->run();
 	}
 
@@ -182,7 +192,7 @@ class Coingate_For_Woocommerce {
 	 * @return string The name of the plugin.
 	 * @since  1.0.0
 	 */
-	public function get_plugin_name() {
+	public function get_plugin_name(): string {
 		return $this->plugin_name;
 	}
 
@@ -192,7 +202,7 @@ class Coingate_For_Woocommerce {
 	 * @return Coingate_For_Woocommerce_Loader Orchestrates the hooks of the plugin.
 	 * @since  1.0.0
 	 */
-	public function get_loader() {
+	public function get_loader(): Coingate_For_Woocommerce_Loader {
 		return $this->loader;
 	}
 
@@ -202,7 +212,7 @@ class Coingate_For_Woocommerce {
 	 * @return string The version number of the plugin.
 	 * @since  1.0.0
 	 */
-	public function get_version() {
+	public function get_version(): string {
 		return $this->version;
 	}
 

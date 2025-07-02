@@ -35,26 +35,28 @@ final class Coingate_For_Woocommerce_Blocks_Support extends AbstractPaymentMetho
 	/**
 	 * Payment gateway settings.
 	 *
-	 * @var array
+	 * @var array<string, mixed>
 	 */
-	private $gateway;
+	private array $settings = array();
 
 	/**
 	 * Payment method name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'coingate';
+	protected string $name = 'coingate';
 
 	/**
-	 * Init
+	 * Initialize the payment method.
+	 *
+	 * @return void
 	 */
 	public function initialize(): void {
 		$this->settings = get_option( 'woocommerce_coingate_settings', array() );
 	}
 
 	/**
-	 * Payment method enabled.
+	 * Check if payment method is active.
 	 *
 	 * @return bool
 	 */
@@ -63,11 +65,13 @@ final class Coingate_For_Woocommerce_Blocks_Support extends AbstractPaymentMetho
 	}
 
 	/**
-	 * Script to use
+	 * Get payment method script handles.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_payment_method_script_handles(): array {
+		$asset_file = include plugin_dir_path( __DIR__ ) . 'build/index.asset.php';
+
 		wp_register_script(
 			'wc-coingate-blocks-integration',
 			plugin_dir_url( __DIR__ ) . 'build/index.js',
@@ -76,25 +80,33 @@ final class Coingate_For_Woocommerce_Blocks_Support extends AbstractPaymentMetho
 				'wc-settings',
 				'wp-element',
 				'wp-html-entities',
+				'wp-components',
+				'wp-i18n',
 			),
-			false,
+			$asset_file['version'] ?? false,
 			true
 		);
+
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations( 'wc-coingate-blocks-integration', 'coingate-for-woocommerce' );
+		}
 
 		return array( 'wc-coingate-blocks-integration' );
 	}
 
 	/**
-	 * Payment method data
+	 * Get payment method data.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function get_payment_method_data(): array {
 		return array(
 			'title'       => $this->get_setting( 'title' ),
 			'description' => $this->get_setting( 'description' ),
-			// 'icon'         => plugin_dir_url( __DIR__ ) . 'assets/icon.png',
-			// 'supports'  => array_filter( $this->gateway->supports, [ $this->gateway, 'supports' ] ),
+			'supports'    => array(
+				'products',
+				'refunds',
+			),
 		);
 	}
 }
