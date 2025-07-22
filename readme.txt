@@ -4,56 +4,42 @@ Donate link: https://coingate.com
 Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
 Requires at least: 5.3
 Requires PHP: 7.3
-Tested up to: 6.7.1
-Stable tag: 2.3.0
+Tested up to: 6.8.2
+Stable tag: 2.3.1
 License: MIT
 License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
 == Description ==
 
-Accept cryptocurrency payments in your store with the CoinGate module - a fully automated payment processing and invoicing solution for online stores.
+***Accept Crypto Payments with CoinGate’s WooCommerce Plugin***
 
-Receive payouts in Euros, stablecoins and other cryptocurrencies without exchange rate volatility risk!
+Easily accept cryptocurrency payments on your WooCommerce store using CoinGate. Our WooCommerce plugin provides fully automated payment processing and invoicing, making crypto payments simple, secure, and seamless for both you and your customers.
 
-***COINGATE CRYPTOCURRENCY PAYMENT GATEWAY FOR WOOCOMMERCE***
+With just a quick setup, your customers can pay using 15+ cryptocurrencies like Bitcoin, USDC, Ethereum, and Litecoin across multiple networks—including Layer 2 solutions like Polygon, Arbitrum, Base, Optimism, Solana, and more.
 
-Start accepting Bitcoin and other cryptocurrencies in no time! Our official WooCommerce module connects your store to our ***fully automated cryptocurrency processing platform and invoice system***, giving you access to the rapidly emerging blockchain market.
-
-With CoinGate, online businesses can ***accept Bitcoin, Litecoin, Ethereum, Doge, USDT, USDC*** as well as 70+ other digital currencies (Altcoins) hassle-free. Payments received from customers can be instantly converted to EUR, allowing you to receive payouts in Euros directly in your bank account. Alternatively, store owners can choose to receive ***payouts in Bitcoin*** and other cryptocurrencies such as ***Ethereum, USDC*** and more!
-
-***START ACCEPTING BITCOIN IN MINUTES!***
-
-The extension allows stores that use WordPress WooCommerce shopping cart system to accept Bitcoin payments as well as Altcoins via the CoinGate API. Integration and configuration of our WooCommerce module is super simple, while the solution you get is fully automated – you will receive automatic payment confirmations and order status updates.
-To find out more about the benefits of Cryptocurrencies for your business, as well as the solution offered by CoinGate, [check our website](https://coingate.com/accept).
+You can receive settlements directly to your bank account in EUR, USD, or GBP—or choose to keep crypto.
 
 = Features =
 
-* A simple, one-time setup with little-to-no maintenance needed;
-* Instant payment confirmations and order status updates;
-* Pricing of merchandise in any local fiat currency;
-* [Issuing full and partial refunds](https://coingate.com/blog/post/merchant-refund);
-* Permission-based account management tools;
-* Bitcoin Lightning Network support;
-* Payouts in stablecoins, BTC, other cryptos or EUR;
-* Mitigation of cryptocurrency market volatility;
-* [Sandbox environment](https://sandbox.coingate.com/) for testing with Testnet Bitcoin.
-* No setup or recurring fees.
-* No chargebacks – guaranteed!
+* **Fully automated gateway** – no manual processing needed
+* **Real-time exchange rates** – convert crypto to fiat instantly at checkout
+* **Multi-chain support** – accept crypto on Ethereum, Polygon, Arbitrum, Solana, Base, Optimism, and [more](https://coingate.com/supported-currencies)
+* **Customizable invoices** – choose supported coins, accept underpaid or overpaid orders, and adjust invoice settings
+* **Automatic order updates** – payment confirmations trigger status changes
+* **Test mode available** – experiment in a [sandbox environment](https://sandbox.coingate.com/)
+* **Crypto refunds** – issue full and partial [refunds](https://coingate.com/blog/post/merchant-refund)
+* **Exportable reports** – access accounting and payout data in just a few clicks
+* **Role-based account management** – control [permissions](https://coingate.com/blog/post/business-user-permissions) for team members
+* **Built-in AML/KYC tools** – stay protected and compliant
+* **Flexible fees** – starting at 1%, with lower [rates](https://coingate.com/pricing) available for high-volume merchants
+* **No chargebacks** – all crypto payments are final
 
-= Functionality =
+= How It Works (Example) =
 
-* Automatically accept slightly underpaid orders;
-* Change the invoice settings: disable/enable coins, switch positioning, settlements, & more;
-* Manage payout options for each accepted cryptocurrency.
-
-= How it works - example =
-
-1. An item in the store costs 100 euro.
-2. A customer wants to buy the item and selects to pay with Bitcoin.
-3. An invoice is generated and, according to the current exchange rate, the price is 50,000 euro per bitcoin, so the customer has to pay 0.002 bitcoins.
-4. Once the invoice is paid, the merchant gets a notification and is credited 99 euro (100 euro minus our 1% flat fee), or 0.00198 BTC.
-
-To be able to use the plugin you have to create an account on [https://coingate.com/accept](https://coingate.com/accept)
+1. A customer selects crypto as the payment method for a €100 order.
+2. Based on real-time rates, they’re shown the amount to pay in their chosen cryptocurrency.
+3. After payment confirmation, you receive ~€99 (minus fees) in your CoinGate account.
+4. You can withdraw funds to your bank in EUR, USD, or GBP—or hold them in crypto.
 
 == Installation ==
 
@@ -61,22 +47,18 @@ First and foremost, you will need to sign up for an account on CoinGate. For pro
 
 The installation of our WooCommerce payment module is quite easy. In order to ensure that CoinGate payment gateway is working properly on your website, we will go over these two quick steps:
 
-* Setup API credentials on CoinGate.
+* Create [API credentials](https://support.coingate.com/hc/en-us/articles/4402498918546) and configure ["Settlement Currency"](https://support.coingate.com/hc/en-us/articles/21208494395676-How-to-Configure-Settlement-Currency) on CoinGate.
 * Install the CoinGate payment module for WooCommerce.
 
 For the testing mode to work, you must generate separate API credentials on [https://sandbox.coingate.com](https://sandbox.coingate.com), since API credentials generated on [https://coingate.com](https://coingate.com) will not work in the sandbox environment. To create a set of API credentials, log in to your CoinGate account, and either complete the auto-setup wizard, or find the API tab on the menu – click “Apps”, and then click “+New App”.
 
-*Please note, this guide was created using WordPress 4.7.4, but is also useful for installing older or upcoming versions.*
-
 1. Login to your WordPress admin panel and go to Plugins > Add New.
 2. In the Search Plugins field, type in “coingate”. When the CoinGate for WooCommerce plugin is displayed, click “Install Now” (if asked, enter your FTP credentials).
 3. After the plugin is installed, click “Activate”.
-4. Go to WooCommerce > Settings > Payments > Method : “Cryptocurrencies via CoinGate” and then click the checkbox “Enabled”. After Enabled is clicked then press on CoinGate on the same page. If needed, change the Description and the Title according to your preferences.
-5. Enter your API credentials on the WooCommerce configuration page.
-6. Set the *Receive Currency* parameter to the currency in which you wish to receive your payouts from CoinGate.
-At this point, you can also configure how CoinGate order statuses will correspond to WooCommerce order statuses. Leave the default options if you are not sure.
-7. If you are using Sandbox API credentials, then turn Test Mode on.
-8. Finally, click “Save changes”, and you are good to go!
+4. Go to WooCommerce > Settings > Payments > Method : “Cryptocurrencies via CoinGate” and then click the check box “Enabled”. After Enabled is clicked then press on CoinGate on the same page. If needed, change the Description and the Title according to your preferences.
+5. Enter your API credentials on the WooCommerce configuration page. At this point, you can also configure how CoinGate order statuses will correspond to WooCommerce order statuses. Leave the default options if you are not sure.
+6. If you are using Sandbox API credentials, then turn Test Mode on.
+7. Finally, click “Save changes”, and you are good to go!
 
 == Screenshots ==
 
