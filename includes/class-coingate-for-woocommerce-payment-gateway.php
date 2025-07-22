@@ -138,14 +138,13 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			'order_statuses' => array(
 				'type' => 'order_statuses',
 			),
-			'purchaser_email_status' => array(
-				'title'       => __( 'Pre-fill CoinGate invoice email', 'coingate' ),
+			'transfer_shopper_details' => array(
+				'title'       => __( 'Transfer Shopper Billing Details', 'coingate' ),
 				'type'        => 'checkbox',
-				'label'       => __( 'Pre-fill CoinGate invoice email', 'coingate' ),
+				'label'       => __( 'Transfer Shopper Billing Details', 'coingate' ),
 				'default'     => 'yes',
 				'description' => __(
-					'When this feature is enabled, customer email will be passed to CoinGate\'s checkout form automatically. <br>
-                    Email will be used to contact customers by the CoinGate team if any payment issues occur.',
+					'When enabled, this plugin will collect and securely transfer shopper billing information (e.g. name, address, email) to the configured payment processor during checkout for the purposes of payment processing, fraud prevention, and compliance. Enabling this option also helps enhance the shopper\'s experience by pre-filling required fields during checkout, making the process faster and smoother.',
 					'coingate'
 				),
 			),
@@ -229,8 +228,12 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 			'description'      => implode( ', ', $description ),
 		);
 
-		if ( 'yes' === $this->get_option( 'purchaser_email_status' ) ) {
-			$params['purchaser_email'] = $order->get_billing_email();
+		$transfer_shopper_details = $this->get_option( 'transfer_shopper_details' ) === 'yes' ? true : false;
+		if ( $transfer_shopper_details ) {
+			$shopper_info = $this->get_shopper_info( $order );
+			if ( ! empty( $shopper_info ) ) {
+				$params['shopper'] = $shopper_info;
+			}
 		}
 
 		$response = array( 'result' => 'fail' );
@@ -514,6 +517,60 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 		$order_token = $order->get_meta( static::ORDER_TOKEN_META_KEY );
 
 		return ! empty( $order_token ) && hash_equals( $order_token, $token );
+	}
+
+	/**
+	 * Get shopper information for CoinGate order.
+	 *
+	 * @param WC_Order $order The order.
+	 * @return array
+	 */
+	private function get_shopper_info( WC_Order $order ): array {
+		$company = $order->get_billing_company();
+		$is_business = ! empty( $company );
+
+		$shopper = array(
+			'type'       => $is_business ? 'business' : 'personal',
+			'email'      => $order->get_billing_email(),
+			'first_name' => $order->get_billing_first_name(),
+			'last_name'  => $order->get_billing_last_name(),
+		);
+
+		// Add date of birth if available (WooCommerce doesn't have this by default, but some plugins might add it)
+		$date_of_birth = $order->get_meta( '_billing_birth_date' );
+		if ( ! empty( $date_of_birth ) && $date_of_birth !== '0000-00-00' ) {
+			$shopper['date_of_birth'] = $date_of_birth;
+		}
+
+		$address1 = $order->get_billing_address_1();
+		$address2 = $order->get_billing_address_2();
+		$full_address = trim( $address1 . ' ' . $address2 );
+
+		if ( $is_business ) {
+			$shopper['company_details'] = array(
+				'name'        => $company,
+				'address'     => $full_address,
+				'postal_code' => $order->get_billing_postcode(),
+				'city'        => $order->get_billing_city(),
+				'country'     => $order->get_billing_country(),
+			);
+		} else {
+			$shopper['residence_address']     = $full_address;
+			$shopper['residence_postal_code'] = $order->get_billing_postcode();
+			$shopper['residence_city']        = $order->get_billing_city();
+			$shopper['residence_country']     = $order->get_billing_country();
+		}
+
+		// Filter out empty values
+		return array_filter(
+			$shopper,
+			function( $value ) {
+				if ( is_array( $value ) ) {
+					return ! empty( array_filter( $value ) );
+				}
+				return $value !== null && $value !== '';
+			}
+		);
 	}
 
 }
