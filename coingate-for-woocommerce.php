@@ -35,7 +35,7 @@ require_once 'vendor/autoload.php';
 /**
  * Currently plugin version.
  */
-define( 'COINGATE_FOR_WOOCOMMERCE_VERSION', '2.3.0' );
+define( 'COINGATE_FOR_WOOCOMMERCE_VERSION', '2.3.1' );
 
 /**
  * Currently plugin URL.

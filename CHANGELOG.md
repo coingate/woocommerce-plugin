@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+v2.3.1
+---
+* Added "Transfer shopper billing details to payment processor" option. Improves checkout experience by prefilling billing details. Supports compliance with the Travel Rule: https://coingate.com/blog/post/travel-rule-explained
 
 v2.3.0
 ---
