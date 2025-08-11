@@ -52,16 +52,6 @@ For the testing mode to work, you must generate separate API credentials on [htt
 At this point, you can also configure how CoinGate order statuses will correspond to WooCommerce order statuses. Leave the default options if you are not sure.
 6. If you are using Sandbox API credentials, then turn Test Mode on.
 7. Finally, click “Save changes”, and you are good to go!
-  
-### ⚠️ Important Change
-Since plugin version 2.2.0, the “Receive currency” field has been deprecated and removed from the plugin settings. Therefore, settlement must be configured on the CoinGate platform.
 
-1.	In the API App settings, set the “Settlement Setting” value to “Custom settings (advanced)”:
- 
-<img width="972" alt="image" src="https://github.com/user-attachments/assets/3f160ae4-408b-45a9-8efb-e7cd4bded30f">
-
-2.	Edit the API App, select the “Currency settings” tab, and configure your desired receive currency:
-
-![image](https://github.com/user-attachments/assets/83e66cb9-824f-4e67-be7e-bb423cac6610)
 
 
