@@ -68,7 +68,10 @@ For the testing mode to work, you must generate separate API credentials on [htt
 
 == Changelog ==
 
-= v2.3.0 - 2025-01-01 =
+= v2.3.1 - 2025-07-22 =
+* Added “Transfer shopper billing details to payment processor” option. Improves guest checkout experience by prefilling billing details. Supports compliance with the Travel Rule: https://coingate.com/blog/post/travel-rule-explained
+
+= v2.3.0 - 2025-01-03 =
 * Added: Support for Block-Based Checkout.
 
 = v2.2.0 - 2024-10-15 =
