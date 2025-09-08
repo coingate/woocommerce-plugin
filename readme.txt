@@ -1,4 +1,4 @@
-=== WooCommerce Crypto Payment Processor ===
+=== CoinGate for WooCommerce ===
 Contributors: CoinGate
 Donate link: https://coingate.com
 Tags: coingate, bitcoin, accept bitcoin, litecoin, ethereum, ripple, bitcoin cash, bcash, altcoins, altcoin, accept altcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
@@ -11,9 +11,9 @@ License URI: https://github.com/coingate/woocommerce-plugin/blob/master/LICENSE
 
 == Description ==
 
-***Accept Crypto Payments with CoinGate’s WooCommerce Plugin***
+***Accept Crypto Payments with CoinGate for WooCommerce***
 
-Easily accept cryptocurrency payments on your WooCommerce store using CoinGate. Our WooCommerce plugin provides fully automated payment processing and invoicing, making crypto payments simple, secure, and seamless for both you and your customers.
+Easily accept cryptocurrency payments on your WooCommerce store using CoinGate. Our CoinGate for WooCommerce plugin provides fully automated payment processing and invoicing, making crypto payments simple, secure, and seamless for both you and your customers.
 
 With just a quick setup, your customers can pay using 15+ cryptocurrencies like Bitcoin, USDC, Ethereum, and Litecoin across multiple networks—including Layer 2 solutions like Polygon, Arbitrum, Base, Optimism, Solana, and more.
 
