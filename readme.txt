@@ -41,6 +41,10 @@ You can receive settlements directly to your bank account in EUR, USD, or GBP—
 3. After payment confirmation, you receive ~€99 (minus fees) in your CoinGate account.
 4. You can withdraw funds to your bank in EUR, USD, or GBP—or hold them in crypto.
 
+= Disclaimer =
+
+CoinGate is an independent payment platform and is not affiliated, associated, authorised, endorsed by, or in any way officially connected with WooCommerce. This plugin is a third-party developer integration provided solely for enabling CoinGate services on WooCommerce stores.
+
 == Installation ==
 
 First and foremost, you will need to sign up for an account on CoinGate. For production, use our main website: [https://coingate.com/](https://coingate.com). But before you go live, you may want to do some testing, to make sure everything works nicely. For this purpose, we have a sandbox environment: [https://sandbox.coingate.com](https://sandbox.coingate.com/) – just remember to create an account here even if you already have one on our main website.

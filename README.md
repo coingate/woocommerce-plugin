@@ -54,5 +54,8 @@ At this point, you can also configure how CoinGate order statuses will correspon
 6. If you are using Sandbox API credentials, then turn Test Mode on.
 7. Finally, click “Save changes”, and you are good to go!
 
+## Disclaimer
+
+CoinGate is an independent payment platform and is not affiliated, associated, authorised, endorsed by, or in any way officially connected with WooCommerce. This plugin is a third-party developer integration provided solely for enabling CoinGate services on WooCommerce stores.
 
 
