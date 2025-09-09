@@ -207,7 +207,7 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @throws Exception Unknown exception type.
 	 */
 	public function process_payment( $order_id ) {
-		global $woocommerce, $page, $paged;
+		$logger = wc_get_logger();
 		$order = wc_get_order( $order_id );
 
 		$client = $this->init_coingate();
@@ -247,7 +247,14 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 				$response['redirect'] = $gateway_order->payment_url;
 			}
 		} catch ( ApiErrorException $exception ) {
-			error_log( $exception );
+			$logger->error(
+				'Failed to create CoinGate order for #' . $order->get_id() . ': ' . $exception->getMessage(),
+				array(
+					'source' => 'coingate-for-woocommerce',
+					'params' => $params,
+					'backtrace' => true,
+				)
+			);
 		}
 
 		return $response;
@@ -259,74 +266,105 @@ class Coingate_For_Woocommerce_Payment_Gateway extends WC_Payment_Gateway {
 	 * @throws Exception Unknown exception type.
 	 */
 	public function payment_callback() {
+		$logger = wc_get_logger();
 		$request = $_POST;
+
 		$order = wc_get_order( sanitize_text_field( $request['order_id'] ) );
-
-		if ( ! $this->is_token_valid( $order, preg_replace( '/\s+/', '', $request['token'] ) ) ) {
-			throw new Exception( 'CoinGate callback token does not match' );
+		if ( ! $order ) {
+			// Set HTTP status code to Bad Request (400)
+			wp_send_json_error( array(
+				'message' => 'Invalid order ID: ' . $request['order_id'],
+			), 400 );
 		}
 
-		if ( ! $order || ! $order->get_id() ) {
-			throw new Exception( 'Order #' . $order->get_id() . ' does not exists' );
-		}
+		try {
+			if ( ! $this->is_token_valid( $order, preg_replace( '/\s+/', '', $request['token'] ) ) ) {
+				throw new Exception( 'CoinGate callback token does not match' );
+			}
 
-		if ( $order->get_payment_method() !== $this->id ) {
-			throw new Exception( 'Order #' . $order->get_id() . ' payment method is not ' . $this->method_title );
-		}
+			if ( $order->get_payment_method() !== $this->id ) {
+				throw new Exception( 'Order #' . $order->get_id() . ' payment method is not ' . $this->method_title );
+			}
 
-		// Get payment data from request due to security reason.
-		$client = $this->init_coingate();
-		$cg_order = $client->order->get( (int) sanitize_key( $request['id'] ) );
-		if ( ! $cg_order || $order->get_id() !== (int) $cg_order->order_id ) {
-			throw new Exception( 'CoinGate Order #' . $order->get_id() . ' does not exists.' );
-		}
+			// Get payment data from request due to security reason.
+			$client = $this->init_coingate();
+			$cg_order = $client->order->get( (int) sanitize_key( $request['id'] ) );
+			if ( ! $cg_order || $order->get_id() !== (int) $cg_order->order_id ) {
+				throw new Exception( 'CoinGate Order #' . $order->get_id() . ' does not exists.' );
+			}
 
-		$callback_order_status = sanitize_text_field( $cg_order->status );
+			$callback_order_status = sanitize_text_field( $cg_order->status );
 
-		$order_statuses = $this->get_option( 'order_statuses' );
-		$wc_order_status = isset( $order_statuses[ $callback_order_status ] ) ? $order_statuses[ $callback_order_status ] : null;
-		if ( ! $wc_order_status ) {
-			return;
-		}
+			$order_statuses = $this->get_option( 'order_statuses' );
+			$wc_order_status = isset( $order_statuses[ $callback_order_status ] ) ? $order_statuses[ $callback_order_status ] : null;
+			if ( ! $wc_order_status ) {
+				return;
+			}
 
-		switch ( $callback_order_status ) {
-			case 'paid':
-				$status_was = 'wc-' . $order->get_status();
+			switch ( $callback_order_status ) {
+				case 'paid':
+					$status_was = 'wc-' . $order->get_status();
 
-				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate' ) );
-				$order->payment_complete();
+					$this->handle_order_status( $order, $wc_order_status );
+					$order->add_order_note( __( 'Payment is confirmed on the network, and has been credited to the merchant. Purchased goods/services can be securely delivered to the buyer.', 'coingate' ) );
+					$order->payment_complete();
 
-				$wc_expired_status = $order_statuses['expired'];
-				$wc_canceled_status = $order_statuses['canceled'];
+					$wc_expired_status = $order_statuses['expired'];
+					$wc_canceled_status = $order_statuses['canceled'];
 
-				if ( 'processing' === $order->status && ( $status_was === $wc_expired_status || $status_was === $wc_canceled_status ) ) {
-					WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger( $order->get_id() );
-				}
-				if ( ( 'processing' === $order->status || 'completed' === $order->status ) && ( $status_was === $wc_expired_status || $status_was === $wc_canceled_status ) ) {
-					WC()->mailer()->emails['WC_Email_New_Order']->trigger( $order->get_id() );
-				}
-				break;
-			case 'confirming':
-				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Shopper transferred the payment for the invoice. Awaiting blockchain network confirmation.', 'coingate' ) );
-				break;
-			case 'invalid':
-				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Payment rejected by the network or did not confirm within 7 days.', 'coingate' ) );
-				break;
-			case 'expired':
-				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Buyer did not pay within the required time and the invoice expired.', 'coingate' ) );
-				break;
-			case 'canceled':
-				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Buyer canceled the invoice.', 'coingate' ) );
-				break;
-			case 'refunded':
-				$this->handle_order_status( $order, $wc_order_status );
-				$order->add_order_note( __( 'Payment was refunded to the buyer.', 'coingate' ) );
-				break;
+					if ( 'processing' === $order->status && ( $status_was === $wc_expired_status || $status_was === $wc_canceled_status ) ) {
+						WC()->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger( $order->get_id() );
+					}
+					if ( ( 'processing' === $order->status || 'completed' === $order->status ) && ( $status_was === $wc_expired_status || $status_was === $wc_canceled_status ) ) {
+						WC()->mailer()->emails['WC_Email_New_Order']->trigger( $order->get_id() );
+					}
+					break;
+				case 'confirming':
+					$this->handle_order_status( $order, $wc_order_status );
+					$order->add_order_note( __( 'Shopper transferred the payment for the invoice. Awaiting blockchain network confirmation.', 'coingate' ) );
+					break;
+				case 'invalid':
+					$this->handle_order_status( $order, $wc_order_status );
+					$order->add_order_note( __( 'Payment rejected by the network or did not confirm within 7 days.', 'coingate' ) );
+					break;
+				case 'expired':
+					$this->handle_order_status( $order, $wc_order_status );
+					$order->add_order_note( __( 'Buyer did not pay within the required time and the invoice expired.', 'coingate' ) );
+					break;
+				case 'canceled':
+					$this->handle_order_status( $order, $wc_order_status );
+					$order->add_order_note( __( 'Buyer canceled the invoice.', 'coingate' ) );
+					break;
+				case 'refunded':
+					$this->handle_order_status( $order, $wc_order_status );
+					$order->add_order_note( __( 'Payment was refunded to the buyer.', 'coingate' ) );
+					break;
+			}
+
+			$logger->info(
+				'Callback processed for #' . $order->get_id(),
+				array(
+					'source' => 'coingate-for-woocommerce',
+					'request' => $request,
+				)
+			);
+		} catch ( Exception $e ) {
+			$logger->error(
+                'Failed to process callback for #' . $order->get_id() . ': ' . $e->getMessage(),
+                array(
+                    'source' => 'coingate-for-woocommerce',
+                    'request' => $request,
+                    'order_token' => $order->get_meta( static::ORDER_TOKEN_META_KEY ),
+                    'backtrace' => true,
+                )
+            );
+
+			// Useful for debugging on CoinGate side
+            wp_send_json_error( array(
+                'order_id' => $order->get_id(),
+                'has_token' => ! empty( $order->get_meta( static::ORDER_TOKEN_META_KEY ) ),
+                'message' => $e->getMessage(),
+            ), 500 );
 		}
 	}
 
